@@ -1,24 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import {
+  HashRouter as Router,
+  Route,
+  Switch,
+} from "react-router-dom";
+import Login from "./views/login";
+import Index from "./views/index";
+import { NavLink } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Switch>
+          {/*
+            路由重定向
+          */}
+          <Route path="/" component={Index} exact />
+          <Route path="/index" component={Index}></Route>
+          <Route path="/login" component={Login}></Route>
+        </Switch>
+      </Router>
     </div>
   );
 }

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "babel-plugin-import": "^1.13.3",
     "cra-template": "1.0.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -28,5 +29,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "antd": "^3.26.20",
+    "react-hot-loader": "^4.13.0",
+    "react-router-dom": "^5.2.0"
   }
 }
