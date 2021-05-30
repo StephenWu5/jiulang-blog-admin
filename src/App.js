@@ -4,10 +4,12 @@ import {
   HashRouter as Router,
   Route,
   Switch,
+  Redirect,
 } from "react-router-dom";
 import Login from "./views/login";
 import Index from "./views/index";
 import { NavLink } from "react-router-dom";
+import MyRoute from "./router/MyRoute.js";
 
 function App() {
   return (
@@ -17,9 +19,10 @@ function App() {
           {/*
             路由重定向
           */}
-          <Route path="/" component={Index} exact />
-          <Route path="/index" component={Index}></Route>
+          <MyRoute path="/" component={Index} exact />
+          <MyRoute path="/index" component={Index}></MyRoute>
           <Route path="/login" component={Login}></Route>
+          <Redirect to="/index"></Redirect>
         </Switch>
       </Router>
     </div>

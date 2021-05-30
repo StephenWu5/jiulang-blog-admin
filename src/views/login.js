@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Icon, Input, Button, Checkbox } from "antd";
+import { Form, Icon, Input, Button, Checkbox, message } from "antd";
 import "./login.css";
 import http from '../server'
 
@@ -11,8 +11,15 @@ class Login extends React.Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         //let returnObj = await http.post("http://localhost:8081/login", values);
-        let returnObj = await http.post("/login", values);
-        debugger;
+        let returnObj = await http.post("/api/login", values);
+        if (returnObj.code === 200) {
+          message.success(returnObj.message);
+          this.props.history.push({ pathname: "/index" });
+        } else if (returnObj.code === 400) {
+          message.info(returnObj.message);
+        } else {
+          message.info(returnObj.message);
+        }
       }
     });
   };
@@ -23,7 +30,7 @@ class Login extends React.Component {
       <div className="login-wrapper">
         <Form onSubmit={this.handleSubmit} className="login-form">
           <Form.Item>
-            {getFieldDecorator("username", {
+            {getFieldDecorator("name", {
               rules: [{ required: true, message: "请输入名称！" }],
             })(
               <Input

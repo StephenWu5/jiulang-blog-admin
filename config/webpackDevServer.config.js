@@ -111,6 +111,10 @@ module.exports = function(proxy, allowedHost) {
       app.use(errorOverlayMiddleware());
 
       if (fs.existsSync(paths.proxySetup)) {
+        console.log(
+          '',
+          "proxySetupproxySetupproxySetupproxySetupproxySetup"
+        );
         // This registers user provided middleware for proxy reasons
         require(paths.proxySetup)(app);
       }

@@ -7,8 +7,10 @@ import {
   withRouter,
 } from "react-router-dom";
 import Header1 from "../components/header.js";
+import Slider from "../components/Slider.js";
 import Article from "../components/article.js";
 import FooterContent from "../components/footer.js";
+import MyRoute from "../router/MyRoute";
 import './index.css'
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -18,30 +20,44 @@ class Login extends React.Component {
     super(props);
   }
 
+  state = {
+    collapsed: false,
+  };
 
+  onCollapse = (collapsed) => {
+    console.log(collapsed);
+    this.setState({ collapsed });
+  };
 
   render() {
     return (
       <Layout style={{ height: "100%" }}>
-        <Sider style={{ color: "white" }}>Sider</Sider>
+        <Sider
+          style={{ color: "white" }}
+          collapsible
+          collapsed={this.state.collapsed}
+          onCollapse={this.onCollapse}
+        >
+          <Slider></Slider>
+        </Sider>
         <Layout style={{ color: "white" }}>
           <Header>
             <Header1></Header1>
           </Header>
           <Content>
-            <Route
+            <MyRoute
               path={`${this.props.match.path}/`}
               component={Header1}
               exact
             />
-            <Route
+            <MyRoute
               path={`${this.props.match.path}/header`}
               component={Header1}
-            ></Route>
-            <Route
+            ></MyRoute>
+            <MyRoute
               component={Article}
               path={`${this.props.match.path}/Article`}
-            ></Route>
+            ></MyRoute>
           </Content>
           <Footer>
             <FooterContent></FooterContent>
