@@ -12,3 +12,5 @@
           <Route path="/login" component={Login}></Route>
         </Switch>
     </Router>
+  报错：Cannot destructure property 'getFieldDecorator' of 'this.props.form' as it is undefined.
+  react 跨域的问题
