@@ -1,5 +1,5 @@
 import axios from "axios";
-axios.defaults.baseURL = ""; //根据项目自己更改
+axios.defaults.baseURL = "http://localhost:8081"; //根据项目自己更改
 //一些配置，发起请求和响应可以打印出来查看
 axios.interceptors.request.use((config) => {
   //如果项目中有将token绑定在请求数据的头部，服务器可以有选择的返回数据，只对有效的请求返回数据，这样写
