@@ -24,6 +24,24 @@ class Login extends React.Component {
     });
   };
 
+  //注册用户
+  register = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields(async (err, values) => {
+      if (!err) {
+        let returnObj = await http.post("/api/register", values);
+        if (returnObj.code === 200) {
+          //注册成功
+          message.success(returnObj.message);
+        } else if (returnObj.code === 400) {
+          message.info(returnObj.message);
+        } else {
+          message.info(returnObj.message);
+        }
+      }
+    });
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -65,7 +83,7 @@ class Login extends React.Component {
             或者
             <Button
               type="primary"
-              htmlType="submit"
+              onClick={this.register.bind(this)}
               className="login-form-button"
             >
               注册
