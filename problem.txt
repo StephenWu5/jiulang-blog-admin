@@ -17,3 +17,5 @@
     npm run eject 暴露配置文件
     写好setupProxy.js 就行
     https://blog.csdn.net/qq_43435403/article/details/109986164
+  登录注册
+    密码保存加盐处理

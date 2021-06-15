@@ -42,21 +42,21 @@ class Login extends React.Component {
         </Sider>
         <Layout style={{ color: "white" }}>
           <Header>
-            <Header1></Header1>
+            <Header1 history={this.props.history}></Header1>
           </Header>
           <Content>
             <MyRoute
               path={`${this.props.match.path}/`}
-              component={Header1}
+              component={Article}
               exact
             />
             <MyRoute
-              path={`${this.props.match.path}/header`}
-              component={Header1}
-            ></MyRoute>
-            <MyRoute
               component={Article}
               path={`${this.props.match.path}/Article`}
+            ></MyRoute>
+            <MyRoute
+              path={`${this.props.match.path}/header`}
+              component={Header1}
             ></MyRoute>
           </Content>
           <Footer>
