@@ -2,3 +2,8 @@
   float: right;
   text-align: right;
 }
+
+.content .header-name {
+  color: #ccc;
+  margin-right: 10px;  
+}

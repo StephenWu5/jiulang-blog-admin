@@ -18,13 +18,11 @@ class Header extends React.Component {
   }
 
   componentWillMount(){
-    let resc = Cookies.getJSON("resc");
-    let personInfo = escape(resc);
-    //这里尝试一下切割
-    debugger
+    let resc = Cookies.getJSON("resc").slice(2);
+    resc = JSON.parse(resc);    
     this.setState({
       // 增加条件ismount为true时
-      personInfo: personInfo.j
+      personInfo: resc,
     });
   }
 
@@ -40,7 +38,7 @@ class Header extends React.Component {
   render() {
     return (
       <div className="content">
-        <span>{ this.personInfo.name }</span>
+        <span className="header-name">{ this.state.personInfo.name }</span>
         <Dropdown overlay={this.menu}>
           <Avatar size={32} icon="user">
             <Icon type="down" />

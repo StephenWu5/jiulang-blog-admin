@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import Header1 from "../components/header.js";
 import Slider from "../components/Slider.js";
-import Article from "../components/article.js";
+import Article from "./article/article.js";
 import FooterContent from "../components/footer.js";
 import MyRoute from "../router/MyRoute";
 import './index.css'
