@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Redirect, Route } from "react-router-dom";
 import Cookies from "js-cookie";
 
-export default class MyRote extends Component {
+export default class MyRoute extends Component {
   render() {
     let token = Cookies.get("resc");
     return (

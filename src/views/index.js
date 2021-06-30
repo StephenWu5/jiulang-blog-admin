@@ -1,16 +1,10 @@
 import React, { Component } from "react";
 import { Layout } from "antd";
-import {
-  HashRouter as Router,
-  Route,
-  Switch,
-  withRouter,
-} from "react-router-dom";
+
 import Header1 from "../components/header.js";
+import Content1 from "../components/content.js";
 import Slider from "../components/Slider.js";
-import Article from "./article/article.js";
 import FooterContent from "../components/footer.js";
-import MyRoute from "../router/MyRoute";
 import './index.css'
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -45,19 +39,7 @@ class Login extends React.Component {
             <Header1 history={this.props.history}></Header1>
           </Header>
           <Content>
-            <MyRoute
-              path={`${this.props.match.path}/`}
-              component={Article}
-              exact
-            />
-            <MyRoute
-              component={Article}
-              path={`${this.props.match.path}/Article`}
-            ></MyRoute>
-            <MyRoute
-              path={`${this.props.match.path}/header`}
-              component={Header1}
-            ></MyRoute>
+            <Content1 {...this.props}></Content1>
           </Content>
           <Footer>
             <FooterContent></FooterContent>
