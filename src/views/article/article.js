@@ -1,51 +1,49 @@
 import React, { Component } from "react";
-import { Table, Divider, Tag } from "antd";
+import { Table, Divider, Tag, Button } from "antd";
 
+// 表格列头的配置
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: "标题",
+    dataIndex: "title",
+    key: "title",
     render: (text) => <a>{text}</a>,
   },
   {
-    title: "Age",
-    dataIndex: "age",
-    key: "age",
+    title: "作者",
+    dataIndex: "author",
+    key: "author",
   },
   {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
+    title: "阅读数",
+    dataIndex: "readingNumber",
+    key: "readingNumber",
   },
   {
-    title: "Tags",
-    key: "tags",
-    dataIndex: "tags",
-    render: (tags) => (
-      <span>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? "geekblue" : "green";
-          if (tag === "loser") {
-            color = "volcano";
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </span>
-    ),
+    title: "评论数",
+    dataIndex: "commentsNumber",
+    key: "commentsNumber",
   },
   {
-    title: "Action",
+    title: "发表时间",
+    dataIndex: "time",
+    key: "time",
+  },
+  {
+    title: "发布状态",
+    dataIndex: "status",
+    key: "status",
+  },
+  {
+    title: "操作",
     key: "action",
     render: (text, record) => (
       <span>
-        <a>Invite {record.name}</a>
+        <Button type="primary">编辑</Button>
         <Divider type="vertical" />
-        <a>Delete</a>
+        <Button type="primary">删除</Button>
+        <Divider type="vertical" />
+        <Button type="primary">查看</Button>
       </span>
     ),
   },
@@ -53,30 +51,18 @@ const columns = [
 
 const data = [
   {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"],
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["loser"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
+    title: "标题",
+    status: "发布状态",
+    time: "发表时间",
+    commentsNumber: "评论数",
+    readingNumber: "阅读数",
+    author: "作者",
+    action:"操作",
   },
 ];
 
 
-class Header extends React.Component {
+class Article extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -90,4 +76,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export default Article;
