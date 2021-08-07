@@ -1,2 +1,16 @@
-1、 面包霄的内容
-2、 table 的处理，修改等。
+待处理：
+  面包霄的内容
+  table 的新增处理，修改等。
+  react如何让组件内部样式私有化   //使用 CSS Modules 的方式引入
+
+    import React, { Component } from 'react';
+    import styles from './Button.module.css'; // 使用 CSS Modules 的方式引入
+    //在 css 文件后面加 .module 后缀
+    import './another-stylesheet.css'; // 普通引入
+    
+    class Button extends Component {
+      render() {
+        // reference as a js object
+        return <button className={styles.error}>Error Button</button>;
+      }
+    }

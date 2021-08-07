@@ -1,50 +1,40 @@
 // 发布文章
 import React, { Component } from "react";
 import { Form, Icon, Input, Button, Checkbox, message } from "antd";
+import styles from "./Dispatch.module.css";
 
+const { TextArea } = Input;
 
 class Dispatch extends React.Component {
-  handleSubmit = (e) => {
-  
+  handleSubmit = (e) => ,
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        console.log("Received values of form: ", values);
+      }
+    });
   };
 
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <div className="login-wrapper">
-        <Form onSubmit={this.handleSubmit} className="login-form">
+      <div className="dispatch-wrapper">
+        <Form onSubmit={this.handleSubmit} className="dispatch-form">
+          <div className={styles.title}>标题：</div>
           <Form.Item>
-            {getFieldDecorator("name", {
-              rules: [{ required: true, message: "请输入名称！" }],
-            })(
-              <Input
-                prefix={
-                  <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
-                }
-                placeholder="请输入名称"
-              />
-            )}
+            {getFieldDecorator("title", {
+              rules: [{ required: true, message: "请输入标题" }],
+            })(<TextArea autoSize={{ minRows: 1, maxRows: 2 }} />)}
+          </Form.Item>
+          <div className={styles.title}>文章内容：</div>
+          <Form.Item>
+            {getFieldDecorator("content", {
+              rules: [{ required: true, message: "请输入内容" }],
+            })(<TextArea autoSize={{ minRows: 8, maxRows: 15 }} />)}
           </Form.Item>
           <Form.Item>
-            {getFieldDecorator("password", {
-              rules: [{ required: true, message: "请输入密码！" }],
-            })(
-              <Input
-                prefix={
-                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-                }
-                type="password"
-                placeholder="请输入密码"
-              />
-            )}
-          </Form.Item>
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="login-form-button"
-            >
-              登录
+            <Button type="primary" htmlType="submit">
+              发文
             </Button>
           </Form.Item>
         </Form>
@@ -53,4 +43,4 @@ class Dispatch extends React.Component {
   }
 }
 
-export default Form.create({ name: "normal_login" })(Dispatch);
+export default Form.create({ name: "normal_dispatch" })(Dispatch);
