@@ -1,15 +1,22 @@
-import React, { Component } from "react";
-import { Menu, Icon, Button } from "antd";
+import React from "react";
+import { Menu, Icon } from "antd";
 import { Link } from "react-router-dom";
 
-const { SubMenu } = Menu;
-
 class Slider extends React.Component {
+  constructor(props){
+    // 必须在这里通过super调用父类的constructor
+    super(props);
+    // 给state赋值，可以使用props
+    this.state = {
+      defaultMenuItem: ['0'], //默认高亮项
+    };
+  }
+
   render() {
     return (
       <React.Fragment>
         <div className="logo" />
-        <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+        <Menu theme="dark" defaultSelectedKeys={ this.state.defaultMenuItem } mode="inline">
           <Menu.Item key="0">
             <Link to="/index/Dispatch">
               <Icon type="pie-chart" />

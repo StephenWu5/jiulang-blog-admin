@@ -62,6 +62,11 @@ function checkStatus(response) {
         response.status === 400)
     ) {
       resolve(response.data);
+    } else if (response && response.status === 404) {
+      message.success({
+        content: "服务器没有该接口",
+        duration: 2,
+      });
     } else {
       message.success({
         content: "网络异常，请检查网络连接是否正常！",

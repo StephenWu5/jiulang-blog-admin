@@ -5,7 +5,7 @@ import Header1 from "../components/header.js";
 import Content1 from "../components/content.js";
 import Slider from "../components/Slider.js";
 import FooterContent from "../components/footer.js";
-import './index.css'
+import './Index.css'
 
 const { Header, Footer, Sider, Content } = Layout;
 

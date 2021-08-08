@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Form, Icon, Input, Button, Checkbox, message } from "antd";
-import "./login.css";
+import "./Login.css";
 import http from '../server'
 
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
 
 class Login extends React.Component {
   handleSubmit = (e) => {

@@ -2,14 +2,24 @@
 import React, { Component } from "react";
 import { Form, Icon, Input, Button, Checkbox, message } from "antd";
 import styles from "./Dispatch.module.css";
+import http from '@/server.js';
 const { TextArea } = Input;
 
 class Dispatch extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
+    this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
+        let returnObj = await http.post("/api/articles/dispatch", values);
+        if (returnObj.code === 200) {
+          //发文成功
+          message.success(returnObj.message);
+        } else if (returnObj.code === 400) {
+          message.info(returnObj.message);
+        } else {
+          message.info(returnObj.message);
+        }
       }
     });
   };

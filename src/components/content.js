@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import MyRoute from "../router/MyRoute.js";
 import Header1 from "../components/header.js";
-import Article from "../views/article/article.js";
+import Article from "../views/article/Article.js";
 import Dispatch from "../views/article/Dispatch.js";
 import { Breadcrumb } from "antd";
 import './content.css';

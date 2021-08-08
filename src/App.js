@@ -6,8 +6,8 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import Login from "./views/login";
-import Index from "./views/index";
+import Login from "./views/Login";
+import Index from "./views/Index";
 import { NavLink } from "react-router-dom";
 import MyRoute from "./router/MyRoute.js";
 
