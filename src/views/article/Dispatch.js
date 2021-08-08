@@ -2,11 +2,10 @@
 import React, { Component } from "react";
 import { Form, Icon, Input, Button, Checkbox, message } from "antd";
 import styles from "./Dispatch.module.css";
-
 const { TextArea } = Input;
 
 class Dispatch extends React.Component {
-  handleSubmit = (e) => ,
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
