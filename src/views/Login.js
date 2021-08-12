@@ -13,7 +13,7 @@ class Login extends React.Component {
         let returnObj = await http.post("/api/login", values);
         if (returnObj.code === 200) {
           message.success(returnObj.message);
-          this.props.history.push({ pathname: "/index" });
+          this.props.history.push({ pathname: "/index/Dispatch" });
         } else if (returnObj.code === 400) {
           message.info(returnObj.message);
         } else {

@@ -15,6 +15,7 @@ class Dispatch extends React.Component {
         if (returnObj.code === 200) {
           //发文成功
           message.success(returnObj.message);
+          this.props.history.push({ pathname: "/index/Article" });
         } else if (returnObj.code === 400) {
           message.info(returnObj.message);
         } else {
