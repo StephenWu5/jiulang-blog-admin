@@ -27,13 +27,14 @@ const columns = [
   },
   {
     title: "发表时间",
-    dataIndex: "time",
-    key: "time",
+    dataIndex: "create_time",
+    key: "create_time",
   },
   {
     title: "发布状态",
     dataIndex: "status",
     key: "status",
+    render: (text) => <a>{text === '1' ? '已发布' : '草稿'}</a>,
   },
   {
     title: "操作",

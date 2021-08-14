@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { Form, Icon, Input, Button, Checkbox, message } from "antd";
 import styles from "./Dispatch.module.css";
 import http from '@/server.js';
-import moment from "moment";
 const { TextArea } = Input;
 
 class Dispatch extends React.Component {
@@ -15,9 +14,7 @@ class Dispatch extends React.Component {
 
   // 拼接参数
   getParams() {
-    var now = moment().format("YYYY-MM-DD, h:mm:ss");
     return {
-      now
     }
   }
 
