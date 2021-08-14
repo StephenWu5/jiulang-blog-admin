@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import Login from "./views/Login";
 import Index from "./views/Index";
-import { NavLink } from "react-router-dom";
 import MyRoute from "./router/MyRoute.js";
 
 function App() {
@@ -22,7 +21,6 @@ function App() {
           <MyRoute path="/" component={Index} exact />
           <MyRoute path="/index" component={Index}></MyRoute>
           <Route path="/login" component={Login}></Route>
-          <Redirect to="/index"></Redirect>
         </Switch>
       </Router>
     </div>

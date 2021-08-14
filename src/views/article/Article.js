@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Table, Divider, Tag, Button } from "antd";
+import { Table, Divider, Tag, Button, message } from "antd";
+import http from '@/server.js';
 
 // 表格列头的配置
 const columns = [
@@ -49,28 +50,38 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    title: "标题",
-    status: "发布状态",
-    time: "发表时间",
-    commentsNumber: "评论数",
-    readingNumber: "阅读数",
-    author: "作者",
-    action:"操作",
-  },
-];
-
-
 class Article extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      tableData: []
+    }
+    this.queryArticle = this.queryArticle.bind(this);
   }
+
+  componentDidMount() {
+    this.queryArticle();
+  }
+
+  queryArticle = async () => {
+    let returnObj = await http.post("/api/articles/query");
+    if (returnObj.code === 200) {
+      // 查询文章成功
+      message.success(returnObj.message);
+      this.setState({
+        tableData: returnObj.data,
+      });
+    } else if (returnObj.code === 400) {
+      message.info(returnObj.message);
+    } else {
+      message.info(returnObj.message);
+    }
+  };
 
   render() {
     return (
       <div>
-        <Table columns={columns} dataSource={data} />
+        <Table columns={columns} dataSource={this.state.tableData} />
       </div>
     );
   }

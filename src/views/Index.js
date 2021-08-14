@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Layout } from "antd";
 import PropTypes from "prop-types";
 
@@ -15,18 +15,40 @@ class Login extends React.Component {
     super(props);
     this.state = {
       collapsed: false,
-      menuItem: '0'
+      menuItem: "0", // 初始化menuItem高亮
     };
-    // 监听路由变化
-    this.props.history.listen((route) => {
-      let routeMap = {
-        "/index/Header": "2",
-        "/index/Article": "1",
-        "/index/Dispatch": "0",
+    this.setMenuItem = this.setMenuItem.bind(this);
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { type } = nextProps;
+    // type可能由props驱动，也可能由state驱动，这样判断会导致state驱动的type被回滚
+    if (type !== prevState.type) {
+      return {
+        type,
       };
-      this.setState({
-        menuItem: routeMap[route.pathname]
-      })
+    }
+    // 否则，对于state不进行任何操作
+    return null;
+  }
+
+  componentDidMount() {
+    // 初始化路由menuItem的值
+    this.setMenuItem(this.props.location);
+    // 监听路由变化改变menuItem的值
+    this.props.history.listen((route) => {
+      this.setMenuItem(route);
+    });
+  }
+
+  setMenuItem(item) {
+    let routeMap = {
+      "/index/Header": "2",
+      "/index/Article": "1",
+      "/index/Dispatch": "0",
+    };
+    this.setState({
+      menuItem: routeMap[item.pathname],
     });
   }
 
@@ -51,8 +73,6 @@ class Login extends React.Component {
   onCollapse = (collapsed) => {
     this.setState({ collapsed });
   };
-
-  //
 
   render() {
     return (

@@ -3,15 +3,36 @@ import React, { Component } from "react";
 import { Form, Icon, Input, Button, Checkbox, message } from "antd";
 import styles from "./Dispatch.module.css";
 import http from '@/server.js';
+import moment from "moment";
 const { TextArea } = Input;
 
 class Dispatch extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.getParams = this.getParams.bind(this);
+   }
+
+  // 拼接参数
+  getParams() {
+    var now = moment().format("YYYY-MM-DD, h:mm:ss");
+    return {
+      now
+    }
+  }
+
+  // 发文提交
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
-        let returnObj = await http.post("/api/articles/dispatch", values);
+        let param = this.getParams();
+        let params = {
+          ...values,
+          ...param,
+        };
+        let returnObj = await http.post("/api/articles/dispatch", params);
         if (returnObj.code === 200) {
           //发文成功
           message.success(returnObj.message);

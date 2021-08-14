@@ -29,7 +29,7 @@ class Content extends React.Component {
           </Breadcrumb>
           <MyRoute
             path={`${this.props.match.path}/`}
-            component={Article}
+            component={Dispatch}
             exact
           />
           <MyRoute
