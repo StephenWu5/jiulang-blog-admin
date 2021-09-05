@@ -2,61 +2,66 @@ import React, { Component } from "react";
 import { Table, Divider, Tag, Button, message } from "antd";
 import http from '@/server.js';
 
-// 表格列头的配置
-const columns = [
-  {
-    title: "标题",
-    dataIndex: "title",
-    key: "title",
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: "作者",
-    dataIndex: "author",
-    key: "author",
-  },
-  {
-    title: "阅读数",
-    dataIndex: "readingNumber",
-    key: "readingNumber",
-  },
-  {
-    title: "评论数",
-    dataIndex: "commentsNumber",
-    key: "commentsNumber",
-  },
-  {
-    title: "发表时间",
-    dataIndex: "create_time",
-    key: "create_time",
-  },
-  {
-    title: "发布状态",
-    dataIndex: "status",
-    key: "status",
-    render: (text) => <a>{text === '1' ? '已发布' : '草稿'}</a>,
-  },
-  {
-    title: "操作",
-    key: "action",
-    render: (text, record) => (
-      <span>
-        <Button type="primary">编辑</Button>
-        <Divider type="vertical" />
-        <Button type="primary">删除</Button>
-        <Divider type="vertical" />
-        <Button type="primary">查看</Button>
-      </span>
-    ),
-  },
-];
+
 
 class Article extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tableData: []
-    }
+      tableData: [],
+      // 表格列头的配置
+      columns: [
+        {
+          title: "标题",
+          dataIndex: "title",
+          key: "title",
+          render: (text) => <a>{text}</a>,
+        },
+        {
+          title: "作者",
+          dataIndex: "author",
+          key: "author",
+        },
+        {
+          title: "阅读数",
+          dataIndex: "readingNumber",
+          key: "readingNumber",
+        },
+        {
+          title: "评论数",
+          dataIndex: "commentsNumber",
+          key: "commentsNumber",
+        },
+        {
+          title: "发表时间",
+          dataIndex: "create_time",
+          key: "create_time",
+        },
+        {
+          title: "发布状态",
+          dataIndex: "status",
+          key: "status",
+          render: (text) => <a>{text === "1" ? "已发布" : "草稿"}</a>,
+        },
+        {
+          title: "操作",
+          key: "action",
+          render: (text, record) => (
+            <span>
+              <Button type="primary" onClick={() => this.editOne(record)}>
+                编辑
+              </Button>
+              <Divider type="vertical" />
+              <Button type="primary" onClick={() => this.deleteOne(record)}>
+                删除
+              </Button>
+              <Divider type="vertical" />
+              <Button type="primary">查看</Button>
+            </span>
+          ),
+        },
+      ],
+    };
     this.queryArticle = this.queryArticle.bind(this);
   }
 
@@ -79,10 +84,18 @@ class Article extends React.Component {
     }
   };
 
+  editOne(record) {
+    this.props.history.push({ pathname: "/index/Dispatch",query: record });
+  }
+
+  deleteOne() {
+    alert(8)
+  }
+
   render() {
     return (
       <div>
-        <Table columns={columns} dataSource={this.state.tableData} />
+        <Table columns={this.state.columns} dataSource={this.state.tableData} />
       </div>
     );
   }

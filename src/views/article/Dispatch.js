@@ -8,26 +8,35 @@ const { TextArea } = Input;
 class Dispatch extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      mode:  this.props.location.query === undefined ? 'Add' : 'Edit'
+    }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getParams = this.getParams.bind(this);
    }
 
   // 拼接参数
-  getParams() {
+  getParams(type) {
+    // 拼接草稿状态字段
+    let status = type === 'submit' ? 1 : 0;
     return {
+      status
     }
   }
 
   // 发文提交
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleSubmit = (type) => {
+    let param = this.getParams(type);
     this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
-        let param = this.getParams();
-        let params = {
-          ...values,
+        let params = this.state.mode === 'Add' ? {
           ...param,
+          ...values,
+        } : {
+          ...this.props.location.query,
+          ...param,
+          ...values,
         };
         let returnObj = await http.post("/api/articles/dispatch", params);
         if (returnObj.code === 200) {
@@ -47,7 +56,7 @@ class Dispatch extends React.Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <div className="dispatch-wrapper">
-        <Form onSubmit={this.handleSubmit} className="dispatch-form">
+        <Form className="dispatch-form" ref={this.textForm}>
           <div className={styles.title}>标题：</div>
           <Form.Item>
             {getFieldDecorator("title", {
@@ -61,14 +70,28 @@ class Dispatch extends React.Component {
             })(<TextArea autoSize={{ minRows: 8, maxRows: 15 }} />)}
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" onClick={() => this.handleSubmit('submit')}>
               发文
+            </Button>
+            <Button type="primary" className={styles.saveButton} onClick={() => this.handleSubmit('save')}>
+              保存
             </Button>
           </Form.Item>
         </Form>
       </div>
     );
   }
+
+  componentDidMount() {
+    if(this.state.mode === 'Edit') {
+      let { title, content } = this.props.location.query;
+      this.props.form.setFieldsValue({
+        title,
+        content,
+      })
+    }
+  }
+
 }
 
 export default Form.create({ name: "normal_dispatch" })(Dispatch);
