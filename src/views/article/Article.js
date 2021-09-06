@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Divider, Tag, Button, message } from "antd";
+import { Table, Divider, Tag, Button, message, Modal } from "antd";
 import http from '@/server.js';
 
 
@@ -9,6 +9,8 @@ class Article extends React.Component {
     super(props);
     this.state = {
       tableData: [],
+      visible: false,
+      deleteId: null,
       // 表格列头的配置
       columns: [
         {
@@ -63,6 +65,8 @@ class Article extends React.Component {
       ],
     };
     this.queryArticle = this.queryArticle.bind(this);
+    this.handleOk = this.handleOk.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   componentDidMount() {
@@ -85,17 +89,49 @@ class Article extends React.Component {
   };
 
   editOne(record) {
-    this.props.history.push({ pathname: "/index/Dispatch",query: record });
+    this.props.history.push({ pathname: "/index/Dispatch", query: record });
   }
 
-  deleteOne() {
-    alert(8)
+  deleteOne(record) {
+    this.setState({
+      visible: true,
+      deleteId: record.id,
+    });
+  }
+
+  async handleOk() {
+    let  param =  {id: this.state.deleteId};
+    let returnObj = await http.post("/api/articles/delete", param);
+    if (returnObj.code === 200) {
+      // 删除文章成功
+      message.success(returnObj.message);
+      this.queryArticle();
+      this.handleCancel();
+    } else if (returnObj.code === 400) {
+      message.info(returnObj.message);
+    } else {
+      message.info(returnObj.message);
+    }
+  };
+
+  handleCancel() {
+    this.setState({
+      visible: false,
+    });
   }
 
   render() {
     return (
       <div>
         <Table columns={this.state.columns} dataSource={this.state.tableData} />
+        <Modal
+          title="删除框"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          <p>确定删除吗？</p>
+        </Modal>
       </div>
     );
   }

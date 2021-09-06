@@ -38,7 +38,8 @@ class Dispatch extends React.Component {
           ...param,
           ...values,
         };
-        let returnObj = await http.post("/api/articles/dispatch", params);
+        let url = this.state.mode === 'Add' ?  '/api/articles/dispatch' : '/api/articles/update';
+        let returnObj = await http.post(url, params);
         if (returnObj.code === 200) {
           //发文成功
           message.success(returnObj.message);
@@ -70,10 +71,14 @@ class Dispatch extends React.Component {
             })(<TextArea autoSize={{ minRows: 8, maxRows: 15 }} />)}
           </Form.Item>
           <Form.Item>
-            <Button type="primary" onClick={() => this.handleSubmit('submit')}>
-              发文
+            <Button type="primary" onClick={() => this.handleSubmit("submit")}>
+              {this.state.mode === "Edit" ? '更新' : '发文'}
             </Button>
-            <Button type="primary" className={styles.saveButton} onClick={() => this.handleSubmit('save')}>
+            <Button
+              type="primary"
+              className={styles.saveButton}
+              onClick={() => this.handleSubmit("save")}
+            >
               保存
             </Button>
           </Form.Item>
@@ -83,6 +88,7 @@ class Dispatch extends React.Component {
   }
 
   componentDidMount() {
+    // 表单字段初始化
     if(this.state.mode === 'Edit') {
       let { title, content } = this.props.location.query;
       this.props.form.setFieldsValue({
