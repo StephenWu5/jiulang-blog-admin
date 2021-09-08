@@ -40,7 +40,6 @@ class App extends React.Component {
                     exact
                     path={route.path}
                     component={route.component}
-                    childRoute={route.childRoute}
                   />
                 );
               } else {

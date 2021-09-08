@@ -16,6 +16,8 @@ class Content extends React.Component {
   };
 
   render() {
+    let { childRoute } = this.context;
+    debugger
     return (
       <React.Fragment>
         <div className="contentWrapper">
@@ -30,29 +32,30 @@ class Content extends React.Component {
             </Breadcrumb.Item>
             <Breadcrumb.Item>An Application</Breadcrumb.Item>
           </Breadcrumb>
-          {this.context.childRoute.map((route, key) => {
-            // console.log(route)
-            if (route.exact) {
-              return (
-                <MyRoute
-                  key={key}
-                  exact
-                  path={route.path}
-                  component={route.component}
-                  children={route.children}
-                />
-              );
-            } else {
-              return (
-                <MyRoute
-                  key={key}
-                  path={route.path}
-                  component={route.component}
-                  children={route.children}
-                />
-              );
-            }
-          })}
+          {childRoute &&
+            childRoute.map((route, key) => {
+              // console.log(route)
+              if (route.exact) {
+                return (
+                  <MyRoute
+                    key={key}
+                    exact
+                    path={route.path}
+                    component={route.component}
+                    children={route.children}
+                  />
+                );
+              } else {
+                return (
+                  <MyRoute
+                    key={key}
+                    path={route.path}
+                    component={route.component}
+                    children={route.children}
+                  />
+                );
+              }
+            })}
         </div>
       </React.Fragment>
     );
