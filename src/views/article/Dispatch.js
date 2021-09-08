@@ -79,7 +79,7 @@ class Dispatch extends React.Component {
               className={styles.saveButton}
               onClick={() => this.handleSubmit("save")}
             >
-              保存
+              草稿
             </Button>
           </Form.Item>
         </Form>

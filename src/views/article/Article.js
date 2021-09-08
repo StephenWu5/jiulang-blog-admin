@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Table, Divider, Tag, Button, message, Modal } from "antd";
-import http from '@/server.js';
-
-
+import http from "@/server.js";
 
 class Article extends React.Component {
   constructor(props) {
@@ -77,7 +75,7 @@ class Article extends React.Component {
     let returnObj = await http.post("/api/articles/query");
     if (returnObj.code === 200) {
       // 查询文章成功
-      message.success(returnObj.message);
+      //message.success(returnObj.message);
       this.setState({
         tableData: returnObj.data,
       });
@@ -100,7 +98,7 @@ class Article extends React.Component {
   }
 
   async handleOk() {
-    let  param =  {id: this.state.deleteId};
+    let param = { id: this.state.deleteId };
     let returnObj = await http.post("/api/articles/delete", param);
     if (returnObj.code === 200) {
       // 删除文章成功
@@ -112,7 +110,7 @@ class Article extends React.Component {
     } else {
       message.info(returnObj.message);
     }
-  };
+  }
 
   handleCancel() {
     this.setState({

@@ -1,16 +1,19 @@
 import React, { Component } from "react";
-import MyRoute from "../router/MyRoute.js";
-import Header1 from "../components/header.js";
-import Article from "../views/article/Article.js";
-import Dispatch from "../views/article/Dispatch.js";
-import { Breadcrumb } from "antd";
-import './content.css';
 
+import { Breadcrumb } from "antd";
+import "./content.css";
+import { MyRoute } from "../router/MyRoute.js";
+import PropTypes from "prop-types";
 
 class Content extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  // 子组件声明自己需要使用 context
+  static contextTypes = {
+    childRoute: PropTypes.array,
+  };
 
   render() {
     return (
@@ -27,23 +30,29 @@ class Content extends React.Component {
             </Breadcrumb.Item>
             <Breadcrumb.Item>An Application</Breadcrumb.Item>
           </Breadcrumb>
-          <MyRoute
-            path={`${this.props.match.path}/`}
-            component={Dispatch}
-            exact
-          />
-          <MyRoute
-            component={Dispatch}
-            path={`${this.props.match.path}/Dispatch`}
-          ></MyRoute>
-          <MyRoute
-            component={Article}
-            path={`${this.props.match.path}/Article`}
-          ></MyRoute>
-          <MyRoute
-            path={`${this.props.match.path}/Header`}
-            component={Header1}
-          ></MyRoute>
+          {this.context.childRoute.map((route, key) => {
+            // console.log(route)
+            if (route.exact) {
+              return (
+                <MyRoute
+                  key={key}
+                  exact
+                  path={route.path}
+                  component={route.component}
+                  children={route.children}
+                />
+              );
+            } else {
+              return (
+                <MyRoute
+                  key={key}
+                  path={route.path}
+                  component={route.component}
+                  children={route.children}
+                />
+              );
+            }
+          })}
         </div>
       </React.Fragment>
     );
