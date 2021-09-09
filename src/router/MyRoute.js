@@ -7,7 +7,7 @@ import Header1 from "../components/header.js";
 import Article from "../views/article/Article.js";
 import Dispatch from "../views/article/Dispatch.js";
 
-// 动态路由
+// 动态路由 -- 后面需要改为后台编辑保存的
 let routes = [
   { path: "/", component: Index, exact: true },
   {
@@ -53,12 +53,15 @@ let MyRoute = class MyRoute extends Component {
     let isIndex = path === "/" || path === "/Index" || path === "/Index/" ;
     return (
       <React.Fragment>
+        {/* 校验登录 */}
         {token ? (
           <Route {...this.props}></Route>
         ) : (
           <Redirect to="/login"></Redirect>
         )}
+        {/* 加载登录组件 */}
         {isLogin && <Route {...this.props}></Route>}
+        {/* 首页的重定向 */}
         {isIndex && <Redirect to="/index/Dispatch"></Redirect>}
       </React.Fragment>
     );
