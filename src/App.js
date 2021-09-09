@@ -48,7 +48,6 @@ class App extends React.Component {
                     key={key}
                     path={route.path}
                     component={route.component}
-                    childRoute={route.childRoute}
                   />
                 );
               }

@@ -14,10 +14,30 @@ let routes = [
     path: "/index",
     component: Index,
     childRoute: [
-      { path: "/index/", component: Dispatch, exact: true },
-      { path: "/index/Dispatch", component: Dispatch },
-      { path: "/index/Article", component: Article },
-      { path: "/index/Header", component: Header1 },
+      {
+        path: "/index/Dispatch",
+        component: Dispatch,
+        typeIcon: "pie-chart",
+        desc: "发文",
+      },
+      {
+        path: "/index/Article",
+        component: Article,
+        typeIcon: "pie-chart",
+        desc: "文章管理",
+      },
+      {
+        path: "/index/Header",
+        component: Header1,
+        typeIcon: "pie-chart",
+        desc: "标签管理",
+      },
+      {
+        path: "/index/Header2",
+        component: Header1,
+        typeIcon: "pie-chart",
+        desc: "标签管理2",
+      },
     ],
   },
   { path: "/login", component: Login },
@@ -29,13 +49,17 @@ let MyRoute = class MyRoute extends Component {
     let token = Cookies.get("resc");
     let { path } = this.props;
     let isLogin = path === "/login";
+    // 首页需要重新定向
+    let isIndex = path === "/" || path === "/Index" || path === "/Index/" ;
     return (
       <React.Fragment>
-        {token || isLogin ? (
+        {token ? (
           <Route {...this.props}></Route>
         ) : (
           <Redirect to="/login"></Redirect>
         )}
+        {isLogin && <Route {...this.props}></Route>}
+        {isIndex && <Redirect to="/index/Dispatch"></Redirect>}
       </React.Fragment>
     );
   }

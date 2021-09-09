@@ -8,17 +8,18 @@ class Slider extends React.Component {
     // 必须在这里通过super调用父类的constructor
     super(props);
     // 给state赋值，可以使用props
-    this.state = {
-    };
+    this.state = {};
   }
 
   // 子组件声明自己需要使用 context
   static contextTypes = {
     menuItem: PropTypes.string,
     callback: PropTypes.func,
-  };
+    childRoute: PropTypes.array,
+  }
 
   render() {
+    let { childRoute } = this.context;
     return (
       <React.Fragment>
         <div className="logo" />
@@ -28,24 +29,16 @@ class Slider extends React.Component {
           selectedKeys={this.context.menuItem}
           mode="inline"
         >
-          <Menu.Item key="0">
-            <Link to="/index/Dispatch">
-              <Icon type="pie-chart" />
-              <span>发文</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="1">
-            <Link to="/index/Article">
-              <Icon type="pie-chart" />
-              <span>文章管理</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <Link to="/index/Header">
-              <Icon type="desktop" />
-              <span>标签管理</span>
-            </Link>
-          </Menu.Item>
+          {childRoute && childRoute.map((item, key) => {
+              return (
+                <Menu.Item key={key}>
+                  <Link to={item.path}>
+                    <Icon type={item.typeIcon} />
+                    <span>{item.desc}</span>
+                  </Link>
+                </Menu.Item>
+              );
+          })}
         </Menu>
       </React.Fragment>
     );

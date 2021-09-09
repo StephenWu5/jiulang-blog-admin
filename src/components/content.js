@@ -17,7 +17,6 @@ class Content extends React.Component {
 
   render() {
     let { childRoute } = this.context;
-    debugger
     return (
       <React.Fragment>
         <div className="contentWrapper">
@@ -42,7 +41,6 @@ class Content extends React.Component {
                     exact
                     path={route.path}
                     component={route.component}
-                    children={route.children}
                   />
                 );
               } else {
@@ -51,7 +49,6 @@ class Content extends React.Component {
                     key={key}
                     path={route.path}
                     component={route.component}
-                    children={route.children}
                   />
                 );
               }
