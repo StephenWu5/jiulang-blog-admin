@@ -64,7 +64,7 @@ class Dispatch extends React.Component {
               rules: [{ required: true, message: "请输入标题" }],
             })(<TextArea autoSize={{ minRows: 1, maxRows: 2 }} />)}
           </Form.Item>
-          <div className={styles.title}>文章内容：</div>
+          <div className={styles.title}>内容：</div>
           <Form.Item>
             {getFieldDecorator("content", {
               rules: [{ required: true, message: "请输入内容" }],

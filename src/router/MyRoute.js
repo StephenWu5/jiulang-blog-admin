@@ -32,12 +32,6 @@ let routes = [
         typeIcon: "pie-chart",
         desc: "标签管理",
       },
-      {
-        path: "/index/Header2",
-        component: Header1,
-        typeIcon: "pie-chart",
-        desc: "标签管理2",
-      },
     ],
   },
   { path: "/login", component: Login },

@@ -48,15 +48,25 @@ class Article extends React.Component {
           key: "action",
           render: (text, record) => (
             <span>
-              <Button type="primary" onClick={() => this.editOne(record)}>
+              <Button
+                type="primary"
+                size="small"
+                onClick={() => this.editOne(record)}
+              >
                 编辑
               </Button>
               <Divider type="vertical" />
-              <Button type="primary" onClick={() => this.deleteOne(record)}>
+              <Button
+                type="danger"
+                size="small"
+                onClick={() => this.deleteOne(record)}
+              >
                 删除
               </Button>
               <Divider type="vertical" />
-              <Button type="primary">查看</Button>
+              <Button type="dashed" size="small">
+                查看
+              </Button>
             </span>
           ),
         },

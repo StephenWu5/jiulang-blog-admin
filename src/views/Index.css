@@ -9,3 +9,13 @@ body,
 .ant-layout {
   height: 100%;
 }
+
+.ant-layout-footer{
+  margin: 0;
+  padding: 0;
+  height: 48px;
+  text-align: center;
+  line-height: 48px;
+  background-color: #001529;
+  color:#ccc;
+}

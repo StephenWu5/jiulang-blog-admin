@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import styles from "./footer.module.css";
 
 class FooterContent extends React.Component {
   constructor(props) {
@@ -6,7 +7,7 @@ class FooterContent extends React.Component {
   }
 
   render() {
-    return <div style={{ color: "red",backgroundColor: '#ccc' }}>footer</div>;
+    return ('@博客后台管理系统(2021-2021)');
   }
 }
 
