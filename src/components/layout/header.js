@@ -1,31 +1,31 @@
-import React, { Component } from "react";
-import { Avatar, Dropdown, Icon, Menu, message } from "antd";
-import "./header.css";
-import Cookies from "js-cookie";
+import React from 'react';
+import { Avatar, Dropdown, Icon, Menu, message } from 'antd';
+import './header.css';
+import Cookies from 'js-cookie';
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      personInfo: { name: "" },
+      personInfo: { name: '' }
     };
   }
 
-  logOut() {
-    Cookies.remove("resc");
-    message.success("退出成功");
-    this.props.history.push({ pathname: "/login" });
-  }
-
-  componentWillMount() {
-    if (Cookies.getJSON("resc")) {
-      let resc = Cookies.getJSON("resc").slice(2);
+  UNSAFE_componentWillMount() {
+    if (Cookies.getJSON('resc')) {
+      let resc = Cookies.getJSON('resc').slice(2);
       resc = JSON.parse(resc);
       this.setState({
         // 增加条件ismount为true时
-        personInfo: resc,
+        personInfo: resc
       });
     }
+  }
+
+  logOut() {
+    Cookies.remove('resc');
+    message.success('退出成功');
+    this.props.history.push({ pathname: '/login' });
   }
 
   menu = (
