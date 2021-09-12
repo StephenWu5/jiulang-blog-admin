@@ -344,6 +344,7 @@ module.exports = function(webpackEnv) {
             },
           ],
           include: paths.appSrc,
+          exclude: /node_modules/,
         },
         {
           // "oneOf" will traverse all following loaders until one will

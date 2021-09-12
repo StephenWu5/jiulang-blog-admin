@@ -7,20 +7,20 @@ import {
   Redirect,
 } from "react-router-dom";
 import PropTypes from "prop-types";
-
+import Login from "./views/Login";
 import { MyRoute, routes } from "./router/MyRoute.js";
 
 
 class App extends React.Component {
   // 父组件声明自己支持 context
   static childContextTypes = {
-    childRoute: PropTypes.array,
+    children: PropTypes.array,
   };
 
   // 父组件提供一个函数，用来返回相应的 context 对象
   getChildContext() {
     return {
-      childRoute: routes[1].childRoute,
+      children: routes[0].children,
     };
   }
   render() {
@@ -52,6 +52,7 @@ class App extends React.Component {
                 );
               }
             })}
+            <Route path="/login" component={Login}></Route>
           </Switch>
         </Router>
       </div>

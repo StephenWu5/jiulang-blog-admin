@@ -42,10 +42,14 @@ class Login extends React.Component {
   }
 
   setMenuItem(item) {
-    let { childRoute } = this.context;
-    let index = childRoute.findIndex((rItem) => {
+    let { children } = this.context;
+    debugger
+    let index = children.findIndex((rItem) => {
       return rItem.path === item.pathname;
     });
+    if(index === -1) {
+      index = 0;
+    }
     this.setState({
       menuItem: index.toString(),
     });
@@ -59,7 +63,7 @@ class Login extends React.Component {
 
   // 子组件声明自己需要使用 context
   static contextTypes = {
-    childRoute: PropTypes.array,
+    children: PropTypes.array,
   };
 
   // 父组件提供一个函数，用来返回相应的 context 对象

@@ -15,11 +15,11 @@ class Slider extends React.Component {
   static contextTypes = {
     menuItem: PropTypes.string,
     callback: PropTypes.func,
-    childRoute: PropTypes.array,
+    children: PropTypes.array,
   }
 
   render() {
-    let { childRoute } = this.context;
+    let { children } = this.context;
     return (
       <React.Fragment>
         <div className="logo" />
@@ -29,7 +29,7 @@ class Slider extends React.Component {
           selectedKeys={this.context.menuItem}
           mode="inline"
         >
-          {childRoute && childRoute.map((item, key) => {
+          {children && children.map((item, key) => {
               return (
                 <Menu.Item key={key}>
                   <Link to={item.path}>
