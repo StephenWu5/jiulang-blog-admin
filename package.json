@@ -147,5 +147,16 @@
     "presets": [
       "react-app"
     ]
+  },
+  "lint-staged": {
+    "linters": {
+      "*.js": [
+        "eslint --fix",
+        "git add"
+      ]
+    },
+    "ignore": [
+      "**/static/**/*.js"
+    ]
   }
 }

@@ -1,6 +1,5 @@
 'use strict';
-
-const fs = require('fs');
+const fs = require('fs')
 const path = require('path');
 const webpack = require('webpack');
 const resolve = require('resolve');
@@ -77,11 +76,11 @@ module.exports = function(webpackEnv) {
         // in production `paths.publicUrlOrPath` can be a relative path
         options: paths.publicUrlOrPath.startsWith('.')
           ? { publicPath: '../../' }
-          : {},
+          : {}
       },
       {
         loader: require.resolve('css-loader'),
-        options: cssOptions,
+        options: cssOptions
       },
       {
         // Options for PostCSS as we reference these options twice

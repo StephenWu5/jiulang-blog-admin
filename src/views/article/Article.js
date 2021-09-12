@@ -104,7 +104,7 @@ class Article extends React.Component {
     this.setState({
       visible: true,
       deleteId: record.id,
-    });
+    })
   }
 
   async handleOk() {

@@ -7,7 +7,7 @@ class FooterContent extends React.Component {
   }
 
   render() {
-    return ('@博客后台管理系统(2021-2021)');
+    return "@博客后台管理系统(2021-2021)";
   }
 }
 
