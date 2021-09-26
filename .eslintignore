@@ -8,4 +8,4 @@
 /package-lock.json
 .DS_Store
 fis-conf.js
-/src/serviceWorker.js
+src/serviceWorker.js
