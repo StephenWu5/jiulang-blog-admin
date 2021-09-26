@@ -5,6 +5,7 @@ import Index from '../views/Index';
 import Header1 from '../components/layout/header.js';
 import Article from '../views/article/Article.js';
 import Dispatch from '../views/article/Dispatch.js';
+import Tag from '../views/tag/Tag.js';
 
 // 动态路由 -- 后面需要改为后台编辑保存的
 let routes = [
@@ -25,13 +26,14 @@ let routes = [
         desc: '文章管理'
       },
       {
-        path: '/index/Header',
-        component: Header1,
+        path: '/index/Tag',
+        component: Tag,
         typeIcon: 'pie-chart',
         desc: '标签管理'
       }
     ]
   },
+  // * 对应的路由必须放在最后面。
   { path: '*', component: Index }
 ];
 
