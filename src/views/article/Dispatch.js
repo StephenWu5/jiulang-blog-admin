@@ -9,19 +9,21 @@ class Dispatch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode:  this.props.location.query === undefined ? 'Add' : 'Edit'
+      mode: this.props.location.query === undefined ? 'Add' : 'Edit'
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getParams = this.getParams.bind(this);
   }
 
-  // 拼接参数
-  getParams(type) {
-    // 拼接草稿状态字段
-    let status = type === 'submit' ? 1 : 0;
-    return {
-      status
-    };
+  componentDidMount() {
+    // 表单字段初始化
+    if (this.state.mode === 'Edit') {
+      let { title, content } = this.props.location.query;
+      this.props.form.setFieldsValue({
+        title,
+        content
+      });
+    }
   }
 
   // 发文提交
@@ -30,15 +32,21 @@ class Dispatch extends React.Component {
     this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        let params = this.state.mode === 'Add' ? {
-          ...param,
-          ...values
-        } : {
-          ...this.props.location.query,
-          ...param,
-          ...values
-        };
-        let url = this.state.mode === 'Add' ?  '/api/articles/dispatch' : '/api/articles/update';
+        let params =
+          this.state.mode === 'Add'
+            ? {
+              ...param,
+              ...values
+            }
+            : {
+              ...this.props.location.query,
+              ...param,
+              ...values
+            };
+        let url =
+          this.state.mode === 'Add'
+            ? '/api/articles/dispatch'
+            : '/api/articles/update';
         let returnObj = await http.post(url, params);
         if (returnObj.code === 200) {
           //发文成功
@@ -52,6 +60,15 @@ class Dispatch extends React.Component {
       }
     });
   };
+
+  // 拼接参数
+  getParams(type) {
+    // 拼接草稿状态字段
+    let status = type === 'submit' ? 1 : 0;
+    return {
+      status
+    };
+  }
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -86,18 +103,6 @@ class Dispatch extends React.Component {
       </div>
     );
   }
-
-  componentDidMount() {
-    // 表单字段初始化
-    if(this.state.mode === 'Edit') {
-      let { title, content } = this.props.location.query;
-      this.props.form.setFieldsValue({
-        title,
-        content
-      });
-    }
-  }
-
 }
 
 export default Form.create({ name: 'normal_dispatch' })(Dispatch);

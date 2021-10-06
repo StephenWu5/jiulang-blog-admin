@@ -2,9 +2,11 @@
 import React, { useState } from 'react';
 import { Table, Divider, Button, message, Modal } from 'antd';
 import http from '@/server.js';
+import AddTag from './AddTag';
 class MyTag extends React.Component {
   state = {
     visible: false,
+    AddTagVisible: false,
     columns: [
       {
         title: '标签名',
@@ -18,6 +20,14 @@ class MyTag extends React.Component {
         key: 'action',
         render: (text, record) => (
           <span>
+            <Button
+              type="primary"
+              size="small"
+              onClick={() => this.showAddTag(record)}
+            >
+              编辑
+            </Button>
+            <Divider type="vertical" />
             <Button
               type="danger"
               size="small"
@@ -38,11 +48,21 @@ class MyTag extends React.Component {
   deleteOne() {}
   handleOk() {}
   handleCancel() {}
+  showAddTag() {
+    this.setState({ AddTagVisible: true });
+  }
+  hideAddTag() {
+    this.setState({ AddTagVisible: false });
+  }
   render() {
-    let { columns, tableData, visible } = this.state;
+    let { columns, tableData, visible, AddTagVisible } = this.state;
     return (
       <div>
         <Table columns={columns} dataSource={tableData} />
+        <AddTag
+          visible={AddTagVisible}
+          hideAddTag={() => this.hideAddTag()}
+        ></AddTag>
         <Modal
           title="删除框"
           visible={visible}
