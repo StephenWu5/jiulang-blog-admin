@@ -1,13 +1,16 @@
 import React from 'react';
 import { Modal, Button } from 'antd';
-import { Form, Icon, Input, Checkbox } from 'antd';
+import { Form, Icon, Input, Checkbox, message } from 'antd';
 import styles from './AddTag.module.css';
+import http from '@/server.js';
 /*
  *标签页新增/编辑弹框
  */
 class AddTagModal extends React.Component {
   static getDerivedStateFromProps(props, state) {
-    return { visible: props.visible };
+    return {
+      visible: props.visible
+    };
   }
   state = {
     ModalText: 'Content of the modal',
@@ -15,7 +18,7 @@ class AddTagModal extends React.Component {
     confirmLoading: false,
     formData: {
       //formData数据
-      tag: '666'
+      name: '2121'
     }
   };
 
@@ -25,34 +28,45 @@ class AddTagModal extends React.Component {
     });
   };
 
-  handleOk = () => {
-    setTimeout(() => {
-      this.setState({
-        confirmLoading: false
-      });
-      this.handleCancel();
-    }, 2000);
-  };
-
   handleCancel = () => {
     const { hideAddTag } = this.props;
+    this.setState(
+      {
+        formData: { name: '7767' }
+      },
+      () => {
+        //setState后的回调
+        console.log(this.state.formData); //'123'
+      }
+    );
+    // 清空form表单字段
+    // this.props.form.resetFields();
     hideAddTag();
   };
 
   handleSubmit = (e) => {
+    const { hideAddTag } = this.props;
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async (err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
         this.setState({
           confirmLoading: true
         });
-        setTimeout(() => {
-          this.setState({
-            confirmLoading: false
-          });
+        let url = '/api/tags/create';
+        let returnObj = await http.post(url, values);
+        this.setState({
+          confirmLoading: false
+        });
+        if (returnObj.code === 200) {
+          //发布成功
+          message.success(returnObj.message);
           this.handleCancel();
-        }, 2000);
+        } else if (returnObj.code === 400) {
+          message.info(returnObj.message);
+        } else {
+          message.info(returnObj.message);
+        }
       }
     });
   };
@@ -61,8 +75,8 @@ class AddTagModal extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const { visible, confirmLoading, formData } = this.state;
     return (
-      <Modal
-        title="新增/编辑标签"
+      visible && <Modal
+        title="新增标签"
         visible={visible}
         onOk={this.handleSubmit}
         confirmLoading={confirmLoading}
@@ -71,9 +85,9 @@ class AddTagModal extends React.Component {
         <Form onSubmit={this.handleSubmit} className="login-form">
           <div className={styles.title}>标签名：</div>
           <Form.Item>
-            {getFieldDecorator('tag', {
+            {getFieldDecorator('name', {
               rules: [{ required: true, message: '请输入标签名！' }],
-              initialValue: formData.tag
+              initialValue: formData.name
             })(
               <Input
                 prefix={
