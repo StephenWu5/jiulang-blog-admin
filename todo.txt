@@ -1,7 +1,7 @@
 待处理：
   面包霄的内容 ==
   table 的新增处理，修改等。 ==
-  react如何让组件内部样式私有化   //使用 CSS Modules 的方式引入
+  react如何让组件内部样式私有化   //使用 CSS Modules 的方式引入 ==
 
     import React, { Component } from 'react';
     import styles from './Button.module.css'; // 使用 CSS Modules 的方式引入
@@ -14,7 +14,8 @@
         return <button className={styles.error}>Error Button</button>;
       }
     }
-  form的初始化值为啥不行 == 必须激活表单重新渲染，所以请使用 true && 
+  form的初始化值为啥不行 == 必须激活表单重新渲染，所以请使用 "true &&"  ==
+  子组件执行父组件的函数无法传正确的参数
   通用组件封装
-  权限管理模块
+  权限管理模块的添加
 

@@ -30,17 +30,12 @@ class AddTagModal extends React.Component {
 
   handleCancel = () => {
     const { hideAddTag } = this.props;
+    // 清空form表单字段
     this.setState(
       {
-        formData: { name: '7767' }
-      },
-      () => {
-        //setState后的回调
-        console.log(this.state.formData); //'123'
+        formData: { name: '' }
       }
     );
-    // 清空form表单字段
-    // this.props.form.resetFields();
     hideAddTag();
   };
 
