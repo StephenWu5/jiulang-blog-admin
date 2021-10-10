@@ -1,6 +1,9 @@
 .login-wrapper{
   text-align: center;
-  padding-top: 400px;
+  padding-top: 320px;
+  background-image: url('./login-img.jpeg');
+  background-repeat: no-repeat;
+  height: 100%;
 } 
  
 .login-form {

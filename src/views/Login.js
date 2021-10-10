@@ -77,7 +77,7 @@ class Login extends React.Component {
             >
               登录
             </Button>
-            或者
+            <span style={{color: 'white'}}>或者</span>
             <Button
               type="primary"
               onClick={this.register.bind(this)}

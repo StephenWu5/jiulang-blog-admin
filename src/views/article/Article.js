@@ -8,7 +8,8 @@ class Article extends React.Component {
     this.state = {
       tableData: [],
       visible: false,
-      deleteId: null,
+      deleteId: null, // 待删除项
+      deleteTitle: '', // 删除名称
       // 表格列头的配置
       columns: [
         {
@@ -21,6 +22,11 @@ class Article extends React.Component {
           title: '作者',
           dataIndex: 'author',
           key: 'author'
+        },
+        {
+          title: '阅读数',
+          dataIndex: 'tags',
+          key: 'tags'
         },
         {
           title: '阅读数',
@@ -103,8 +109,9 @@ class Article extends React.Component {
   deleteOne(record) {
     this.setState({
       visible: true,
-      deleteId: record.id
-    })
+      deleteId: record.id,
+      deleteTitle: record.title
+    });
   }
 
   async handleOk() {
@@ -124,11 +131,13 @@ class Article extends React.Component {
 
   handleCancel() {
     this.setState({
-      visible: false
+      visible: false,
+      deleteTitle: ''
     });
   }
 
   render() {
+    const { deleteTitle } = this.state;
     return (
       <div>
         <Table columns={this.state.columns} dataSource={this.state.tableData} />
@@ -138,7 +147,7 @@ class Article extends React.Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <p>确定删除吗？</p>
+          <p>确定删除【{deleteTitle}】吗？</p>
         </Modal>
       </div>
     );

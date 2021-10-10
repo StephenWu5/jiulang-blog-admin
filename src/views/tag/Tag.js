@@ -78,8 +78,10 @@ class MyTag extends React.Component {
     console.log(type, 'type');
     type !== 'addSuccess' && this.fetchData();
     type === 'addSuccess' && this.fetchData();
-  }
-  // 获取表格数据
+  };
+  /**
+   * 获取表格数据
+   */
   async fetchData() {
     let url = '/api/tags/query';
     let returnObj = await http.post(url);
