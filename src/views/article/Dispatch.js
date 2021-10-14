@@ -1,10 +1,10 @@
 // 发布文章
-import React, { Component } from 'react';
-import { Form, Input, Button, Select, message } from 'antd';
+import React from 'react';
+import { Form, Input, Button, Select, message, Card } from 'antd';
 import styles from './Dispatch.module.css';
 import http from '@/server.js';
-const { TextArea } = Input;
-const { Option } = Select;
+
+import  GroupForm from '../../components/GroupForm';
 
 class Dispatch extends React.Component {
   constructor(props) {
@@ -94,53 +94,50 @@ class Dispatch extends React.Component {
     }
   }
 
+  getFields(){
+    let fields = [{
+      groupLabel: '',
+      groupName: '基本信息',
+      groupSeq: '0',
+      groupType: '',
+      hasInnerGroup: true,
+      rows: [
+        {
+          feildName: 'title',
+          feildLabel: '',
+          initValue: '',
+          required: '',
+          enums: ''
+        },
+        {
+          feildName: 'content',
+          feildLabel: '',
+          initValue: '',
+          required: '',
+          enums: ''
+        },
+        {
+          feildName: 'tags',
+          feildLabel: '',
+          initValue: '',
+          required: '',
+          enums: ''
+        }
+      ]
+    }];
+    return fields;
+  }
+
   render() {
-    const { getFieldDecorator } = this.props.form;
     const { tagList } = this.state;
     const tagDefaultValue = tagList.length !== 0 ? tagList[0].name : ''; // 默认第一个
     return (
       <div className="dispatch-wrapper">
-        <Form className="dispatch-form" ref={this.textForm}>
-          <div className={styles.title}>标题：</div>
-          <Form.Item>
-            {getFieldDecorator('title', {
-              rules: [{ required: true, message: '请输入标题' }]
-            })(<TextArea autoSize={{ minRows: 1, maxRows: 2 }} />)}
-          </Form.Item>
-          <div className={styles.title}>内容：</div>
-          <Form.Item>
-            {getFieldDecorator('content', {
-              rules: [{ required: true, message: '请输入内容' }]
-            })(<TextArea autoSize={{ minRows: 8, maxRows: 15 }} />)}
-          </Form.Item>
-          <div className={styles.title}>标签：</div>
-          <Form.Item>
-            {getFieldDecorator('tags', {
-              rules: [{ required: true, message: '请输入内容' }],
-              initialValue: tagDefaultValue
-            })(
-              <Select>
-                {tagList.map((item, index) => (
-                  <Option value={item.name} key={index}>
-                    {item.name}
-                  </Option>
-                ))}
-              </Select>
-            )}
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" onClick={() => this.handleSubmit('submit')}>
-              {this.state.mode === 'Edit' ? '更新' : '发文'}
-            </Button>
-            <Button
-              type="primary"
-              className={styles.saveButton}
-              onClick={() => this.handleSubmit('save')}
-            >
-              草稿
-            </Button>
-          </Form.Item>
-        </Form>
+        <Card>
+          <GroupForm
+            fields={this.getFields()}
+          />
+        </Card>
       </div>
     );
   }
