@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, message, Card } from 'antd';
-import http from '@/server.js';
+import http from '../../utils/http';
 import  GroupForm from '../../components/GroupForm';
 // 发布文章
 class Dispatch extends React.Component {

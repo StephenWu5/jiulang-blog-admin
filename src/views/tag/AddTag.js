@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal } from 'antd';
 import { Form, Card, message } from 'antd';
 import  GroupForm from '../../components/GroupForm';
-import http from '@/server.js';
+import http from '../../utils/http';
 /*
  *标签页--新增/编辑弹框
  */
@@ -113,17 +113,14 @@ class AddTagModal extends React.Component {
         onCancel={this.handleCancel}
         width={'1000px'}
       >
-        <Card>
-          <GroupForm
-            fields={this.getFields(this.otherConfig)}
-            handleSubmit={this.handleSubmit}
-            formData={formData}
-            btns={this.btns}
-          />
-        </Card>
+        <GroupForm
+          fields={this.getFields(this.otherConfig)}
+          handleSubmit={this.handleSubmit}
+          formData={formData}
+          btns={this.btns}
+        />
       </Modal>
     );
   }
 }
-
 export default Form.create({ name: 'AddTagModal' })(AddTagModal);

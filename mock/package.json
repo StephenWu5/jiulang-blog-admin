@@ -1,0 +1,14 @@
+{
+  "name": "mock",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "start": "node ./server.js",
+    "build": "babel ./server.js --out-file server-compiled.js",
+    "serve": "node server-compiled.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

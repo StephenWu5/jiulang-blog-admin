@@ -1,7 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 import React, { useState } from 'react';
 import { Table, Divider, Button, message, Modal } from 'antd';
-import http from '@/server.js';
+import http from '../../utils/http';
 import AddTag from './AddTag';
 import styles from './Tag.module.css';
 class MyTag extends React.Component {

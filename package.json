@@ -17,6 +17,8 @@
     "babel-preset-react-app": "^9.1.2",
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "concurrently": "^6.3.0",
+    "cors": "^2.8.5",
     "cra-template": "1.0.3",
     "css-loader": "3.4.2",
     "dotenv": "8.2.0",
@@ -71,7 +73,7 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "concurrently 'node scripts/start.js'  'cd mock && npm run start'",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "lint": "eslint --ext .js src"

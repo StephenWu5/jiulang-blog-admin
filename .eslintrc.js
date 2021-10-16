@@ -105,7 +105,7 @@ module.exports = {
     "react/no-deprecated": 1, //不使用弃用的方法
     "react/jsx-equals-spacing": 2, //在JSX属性中强制或禁止等号周围的空格
     "no-unreachable": 1, //不能有无法执行的代码
-    "comma-dangle": 2, // 数组和对象键值对最后一个逗号， never参数：不能带末尾的逗号, always参数：必须带末尾的逗号
+    "comma-dangle": ["error", "never"], // 数组和对象键值对最后一个逗号， never参数：不能带末尾的逗号, always参数：必须带末尾的逗号
     "comma-spacing": [2, { before: false, after: true }], // 控制逗号前后的空格
     "no-mixed-spaces-and-tabs": 0, //禁止混用tab和空格
     "prefer-arrow-callback": 0, //比较喜欢箭头回调

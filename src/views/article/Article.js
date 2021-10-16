@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import { Table, Divider, Tag, Button, message, Modal } from 'antd';
-import http from '@/server.js';
+import React from 'react';
+import { Table, Divider,  Button, message, Modal } from 'antd';
+import http from '../../utils/http';
+import { queryArticle } from '../../utils/urls';
 
 class Article extends React.Component {
   constructor(props) {
@@ -88,7 +89,7 @@ class Article extends React.Component {
   }
 
   queryArticle = async () => {
-    let returnObj = await http.post('/api/articles/query');
+    let returnObj = await http.post(queryArticle);
     if (returnObj.code === 200) {
       // 查询文章成功
       this.setState({

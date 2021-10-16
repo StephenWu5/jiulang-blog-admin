@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Icon, Input, Button, message } from 'antd';
 import './Login.css';
-import http from '../server';
+import http from '../utils/http';
 class Login extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
