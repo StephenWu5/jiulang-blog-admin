@@ -24,7 +24,7 @@ class Article extends React.Component {
           key: 'author'
         },
         {
-          title: '阅读数',
+          title: '标签',
           dataIndex: 'tags',
           key: 'tags'
         },
@@ -91,7 +91,6 @@ class Article extends React.Component {
     let returnObj = await http.post('/api/articles/query');
     if (returnObj.code === 200) {
       // 查询文章成功
-      //message.success(returnObj.message);
       this.setState({
         tableData: returnObj.data
       });
