@@ -1,7 +1,8 @@
 import React from 'react';
-import { Table, Divider,  Button, message, Modal } from 'antd';
+import { Divider,  Button, message, Modal } from 'antd';
 import http from '../../utils/http';
 import { queryArticle } from '../../utils/urls';
+import BasicTable from '../../components/BasicTable';
 
 class Article extends React.Component {
   constructor(props) {
@@ -11,6 +12,11 @@ class Article extends React.Component {
       visible: false,
       deleteId: null, // 待删除项
       deleteTitle: '', // 删除名称
+      pagination: { // 分页信息
+        pageSize: 10,
+        current: 1,
+        total: 0
+      },
       // 表格列头的配置
       columns: [
         {
@@ -85,15 +91,22 @@ class Article extends React.Component {
   }
 
   componentDidMount() {
-    this.queryArticle();
+    const { pagination } = this.state;
+    this.queryArticle(pagination);
   }
 
-  queryArticle = async () => {
-    let returnObj = await http.post(queryArticle);
+  queryArticle = async (params) => {
+    let returnObj = await http.post(queryArticle, params);
     if (returnObj.code === 200) {
+      const pagination = { // 分页信息
+        pageSize: returnObj.pageSize,
+        current: returnObj.current,
+        total: returnObj.total
+      };
       // 查询文章成功
       this.setState({
-        tableData: returnObj.data
+        tableData: returnObj.data,
+        pagination
       });
     } else if (returnObj.code === 400) {
       message.info(returnObj.message);
@@ -115,12 +128,13 @@ class Article extends React.Component {
   }
 
   async handleOk() {
-    let param = { id: this.state.deleteId };
-    let returnObj = await http.post('/api/articles/delete', param);
+    const { pagination } = this.state;
+    const param = { id: this.state.deleteId };
+    const returnObj = await http.post('/api/articles/delete', param);
     if (returnObj.code === 200) {
       // 删除文章成功
       message.success(returnObj.message);
-      this.queryArticle();
+      this.queryArticle(pagination);
       this.handleCancel();
     } else if (returnObj.code === 400) {
       message.info(returnObj.message);
@@ -137,10 +151,15 @@ class Article extends React.Component {
   }
 
   render() {
-    const { deleteTitle } = this.state;
+    const { deleteTitle, columns, tableData, pagination } = this.state;
     return (
       <div>
-        <Table columns={this.state.columns} dataSource={this.state.tableData} />
+        <BasicTable
+          columns={columns}
+          tableData={tableData}
+          query={this.queryArticle}
+          pagination={pagination}
+        ></BasicTable>
         <Modal
           title="删除框"
           visible={this.state.visible}
