@@ -1,47 +1,48 @@
-/* eslint-disable react/no-multi-comp */
-import React, { useState } from 'react';
-import { Table, Divider, Button, message, Modal } from 'antd';
+import React from 'react';
+import { Button, message, Modal } from 'antd';
 import http from '../../utils/http';
 import AddTag from './AddTag';
 import styles from './Tag.module.css';
+import BasicTable from '../../components/BasicTable';
 class MyTag extends React.Component {
   state = {
     visible: false,
     tag: {},
     AddTagVisible: false,
-    columns: [
-      {
-        title: '标签名',
-        dataIndex: 'name',
-        key: 'name',
-        // eslint-disable-next-line arrow-parens
-        render: text => <a>{text}</a>
-      },
-      {
-        title: '操作',
-        key: 'action',
-        render: (text, record) => (
-          <span>
-            <Button
-              type="danger"
-              size="small"
-              onClick={() => this.deleteOne(record)}
-            >
-              删除
-            </Button>
-          </span>
-        )
-      }
-    ],
-    tableData: [
-      {
-        tagName: '121'
-      }
-    ]
+    pagination: { // 分页信息
+      pageSize: 10,
+      current: 1,
+      total: 0
+    },
+    tableData: []
   };
   componentDidMount() {
     this.fetchData();
   }
+  columns = [
+    {
+      title: '标签名',
+      dataIndex: 'name',
+      key: 'name',
+      // eslint-disable-next-line arrow-parens
+      render: text => <a>{text}</a>
+    },
+    {
+      title: '操作',
+      key: 'action',
+      render: (text, record) => (
+        <span>
+          <Button
+            type="danger"
+            size="small"
+            onClick={() => this.deleteOne(record)}
+          >
+            删除
+          </Button>
+        </span>
+      )
+    }
+  ];
   async deleteOne(record) {
     this.setState({
       visible: true,
@@ -97,7 +98,7 @@ class MyTag extends React.Component {
   }
 
   render() {
-    let { columns, tableData, visible, AddTagVisible, tag } = this.state;
+    let { tableData, visible, AddTagVisible, tag, pagination } = this.state;
     return (
       <div>
         <div className={styles.addButtonWrapper}>
@@ -110,7 +111,12 @@ class MyTag extends React.Component {
             新增
           </Button>
         </div>
-        <Table columns={columns} dataSource={tableData} />
+        <BasicTable
+          columns={this.columns}
+          tableData={tableData}
+          query={this.fetchData}
+          pagination={pagination}
+        ></BasicTable>
         <AddTag
           visible={AddTagVisible}
           hideAddTag={() => this.hideAddTag()}

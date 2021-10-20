@@ -89,7 +89,7 @@ class GroupForm extends React.Component {
     return (
       <Form className="dispatch-form" {...formItemLayout}>
         {fields.map((group, index) => (
-          <React.Fragment key={group.groupName}>
+          <React.Fragment key={index}>
             <div>{group.groupName}</div>
             {group.hasInnerGroup &&
               group.rows.map((row, rowIndex) => (
@@ -101,25 +101,27 @@ class GroupForm extends React.Component {
           </React.Fragment>
         ))}
         <Form.Item {...tailFormItemLayout}>
-          {btns.map((btn) => {
+          {btns.map((btn, index) => {
             let element;
             if(btn.name === 'submit'){
-              element = <Button type="primary" onClick={() => this.handleSubmit('submit')}>
+              element = <Button type="primary" key={index} onClick={() => this.handleSubmit('submit')}>
                 {btn.text}
               </Button>;
             }else if(btn.name === 'save'){
-              element =  <Button
+              element = <Button
                 type="primary"
                 style={{ marginLeft: '20px' }}
                 onClick={() => this.handleSubmit('save')}
-              >草稿
+                key={index}
+              > 草稿
               </Button>;
             }else if(btn.name === 'close'){
               element =  <Button
                 type="primary"
                 style={{ marginLeft: '20px' }}
                 onClick={btn.onClick}
-              >关闭
+                key={index}
+              > 关闭
               </Button>;
             }
             return element;

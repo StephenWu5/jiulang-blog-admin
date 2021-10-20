@@ -1,8 +1,9 @@
 import React from 'react';
 import { Modal } from 'antd';
-import { Form, Card, message } from 'antd';
+import { Form, message } from 'antd';
 import  GroupForm from '../../components/GroupForm';
 import http from '../../utils/http';
+import { getFields } from './config.js';
 /*
  *标签页--新增/编辑弹框
  */
@@ -18,7 +19,7 @@ class AddTagModal extends React.Component {
     confirmLoading: false,
     // 表格数据
     formData: {
-      name: '2121'
+      name: ''
     }
   };
   otherConfig= {};
@@ -66,31 +67,6 @@ class AddTagModal extends React.Component {
       message.info(returnObj.message);
     }
   };
-  /**
-   * 获取表单配置项
-   * @param {*} otherConfig
-   * @returns
-   */
-  getFields(){
-    let fields = [{
-      groupLabel: '',
-      groupName: '',
-      groupSeq: '0',
-      groupType: '',
-      hasInnerGroup: true,
-      rows: [
-        {
-          fieldName: 'name',
-          fieldLabel: '标签',
-          fieldType: 'INPUT',
-          initValue: '',
-          required: '1',
-          placeholder: '请输入'
-        }
-      ]
-    }];
-    return fields;
-  }
   // 按钮列表
   btns = [
     {
@@ -114,7 +90,7 @@ class AddTagModal extends React.Component {
         width={'1000px'}
       >
         <GroupForm
-          fields={this.getFields(this.otherConfig)}
+          fields={getFields(this.otherConfig)}
           handleSubmit={this.handleSubmit}
           formData={formData}
           btns={this.btns}

@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, message, Card } from 'antd';
 import http from '../../utils/http';
 import  GroupForm from '../../components/GroupForm';
+import { getFields } from './config.js';
 // 发布文章
 class Dispatch extends React.Component {
   state = {
@@ -91,49 +92,7 @@ class Dispatch extends React.Component {
       message.info(returnObj.message);
     }
   }
-  /**
-   * 获取表单配置项
-   * @param {*} otherConfig
-   * @returns
-   */
-  getFields(otherConfig){
-    let fields = [{
-      groupLabel: '',
-      groupName: '',
-      groupSeq: '0',
-      groupType: '',
-      hasInnerGroup: true,
-      rows: [
-        {
-          fieldName: 'title',
-          fieldLabel: '标题',
-          fieldType: 'INPUT',
-          initValue: '',
-          required: '1',
-          placeholder: '请输入'
-        },
-        {
-          fieldName: 'content',
-          fieldLabel: '文章',
-          fieldType: 'TEXTAREA',
-          initValue: '',
-          required: '1',
-          placeholder: '请输入',
-          initStyle: { rows: '22' }
-        },
-        {
-          fieldName: 'tags',
-          fieldLabel: '标签',
-          fieldType: 'SELECT',
-          initValue: '',
-          required: '1',
-          placeholder: '请选择',
-          enums: otherConfig.tagsEnums || []
-        }
-      ]
-    }];
-    return fields;
-  }
+  
   /**
    * 渲染函数
    * @returns
@@ -144,7 +103,7 @@ class Dispatch extends React.Component {
       <div className="dispatch-wrapper">
         <Card>
           <GroupForm
-            fields={this.getFields(this.otherConfig)}
+            fields={getFields(this.otherConfig)}
             mode={this.mode}
             handleSubmit={this.handleSubmit}
             formData={formData}

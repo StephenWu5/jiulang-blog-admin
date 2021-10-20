@@ -38,7 +38,7 @@ class BasicTable extends React.Component {
     };
     return (
       <div>
-        <Table columns={columns} dataSource={tableData} pagination={pagination}/>
+        <Table columns={columns} dataSource={tableData} pagination={pagination} rowKey={(record, index) => index}/>
       </div>
     );
   }
