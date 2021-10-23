@@ -36,30 +36,40 @@ class GroupForm extends React.Component {
    * @returns
    */
   renderFormItem(field) {
-    const { form, formData } = this.props;
+    const { form, formData = {} } = this.props;
     const { getFieldDecorator } = form;
-    const { fieldLabel, fieldName, required, initValue, fieldType, placeholder, enums, initStyle } =
-      field;
+    const {
+      fieldLabel,
+      fieldName,
+      required,
+      initValue,
+      fieldType,
+      placeholder,
+      enums,
+      initStyle
+    } = field;
     let element;
-    if(fieldType === 'INPUT') {
+    if (fieldType === 'INPUT') {
       // 输入框
-      element = <Input placeholder={placeholder}/>;
-    }else if(fieldType === 'TEXTAREA') {
+      element = <Input placeholder={placeholder} />;
+    } else if (fieldType === 'TEXTAREA') {
       // 文本域
-      element = <TextArea placeholder={placeholder}  rows={initStyle.rows}/>;
-    }else if(fieldType === 'SELECT') {
+      element = <TextArea placeholder={placeholder} rows={initStyle.rows} />;
+    } else if (fieldType === 'SELECT') {
       // 下拉框
       console.log(enums, 'enums');
-      element =  <Select placeholder={placeholder}>
-        {enums.map((item) => (
-          <Option value={item.name} key={item.id}>
-            {item.name}
-          </Option>))
-        }
-      </Select>;
-    }else {
+      element = (
+        <Select placeholder={placeholder}>
+          {enums.map((item) => (
+            <Option value={item.name} key={item.id}>
+              {item.name}
+            </Option>
+          ))}
+        </Select>
+      );
+    } else {
       // 其他
-      element = <Input disabled placeholder={'暂时不支持开发'}/>;
+      element = <Input disabled placeholder={'暂时不支持开发'} />;
     }
     return (
       <Form.Item label={fieldLabel}>
@@ -103,26 +113,49 @@ class GroupForm extends React.Component {
         <Form.Item {...tailFormItemLayout}>
           {btns.map((btn, index) => {
             let element;
-            if(btn.name === 'submit'){
-              element = <Button type="primary" key={index} onClick={() => this.handleSubmit('submit')}>
-                {btn.text}
-              </Button>;
-            }else if(btn.name === 'save'){
-              element = <Button
-                type="primary"
-                style={{ marginLeft: '20px' }}
-                onClick={() => this.handleSubmit('save')}
-                key={index}
-              > 草稿
-              </Button>;
-            }else if(btn.name === 'close'){
-              element =  <Button
-                type="primary"
-                style={{ marginLeft: '20px' }}
-                onClick={btn.onClick}
-                key={index}
-              > 关闭
-              </Button>;
+            if (btn.name === 'submit') {
+              element = (
+                <Button
+                  type="primary"
+                  key={index}
+                  onClick={() => this.handleSubmit('submit')}
+                >
+                  {btn.text}
+                </Button>
+              );
+            } else if (btn.name === 'save') {
+              element = (
+                <Button
+                  type="primary"
+                  style={{ marginLeft: '20px' }}
+                  onClick={() => this.handleSubmit('save')}
+                  key={index}
+                >
+                  草稿
+                </Button>
+              );
+            } else if (btn.name === 'close') {
+              element = (
+                <Button
+                  type="primary"
+                  style={{ marginLeft: '20px' }}
+                  onClick={btn.onClick}
+                  key={index}
+                >
+                  {btn.text}
+                </Button>
+              );
+            } else if (btn.name === 'register') {
+              element = (
+                <Button
+                  type="primary"
+                  style={{ marginLeft: '20px' }}
+                  onClick={btn.onClick}
+                  key={index}
+                >
+                  {btn.text}
+                </Button>
+              );
             }
             return element;
           })}

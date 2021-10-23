@@ -1,3 +1,6 @@
+// "off" 或 0 - 关闭规则
+// "warn" 或 1 - 开启规则，使用警告级别的错误：warn (不会导致程序退出)
+// "error" 或 2 - 开启规则，使用错误级别的错误：error (当被触发的时候，程序会退出)
 module.exports = {
   // 环境定义了预定义的全局变量
   env: {
@@ -113,8 +116,8 @@ module.exports = {
     //
     // ES6.相关 //
     //
-    "arrow-body-style": 2, // 要求箭头函数体使用大括号
-    "arrow-parens": 2, // 要求箭头函数的参数使用圆括号
+    "arrow-body-style": 0, // 要求箭头函数体使用大括号
+    "arrow-parens": 0, // 要求箭头函数的参数使用圆括号
     "arrow-spacing": [2, { before: true, after: true }],
     "constructor-super": 0, // 强制在子类构造函数中用super()调用父类构造函数，TypeScrip的编译器也会提示
     "no-const-assign": 2, // 禁止修改 const 声明的变量

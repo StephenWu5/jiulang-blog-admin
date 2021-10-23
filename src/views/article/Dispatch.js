@@ -104,7 +104,6 @@ class Dispatch extends React.Component {
         <Card>
           <GroupForm
             fields={getFields(this.otherConfig)}
-            mode={this.mode}
             handleSubmit={this.handleSubmit}
             formData={formData}
             btns={this.btns}

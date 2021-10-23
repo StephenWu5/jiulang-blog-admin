@@ -75,6 +75,7 @@ class AddTagModal extends React.Component {
     },
     {
       name: 'close',
+      text: '关闭',
       onClick: this.handleCancel
     }
   ]

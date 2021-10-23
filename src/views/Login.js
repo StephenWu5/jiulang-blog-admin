@@ -2,8 +2,51 @@ import React from 'react';
 import { Form, Icon, Input, Button, message } from 'antd';
 import './Login.css';
 import http from '../utils/http';
+import GroupForm from '../components/GroupForm';
 class Login extends React.Component {
-  handleSubmit = (e) => {
+  // 按钮列表
+  btns = [
+    {
+      name: 'submit',
+      text: '登录'
+    },
+    {
+      name: 'register',
+      text: '注册'
+    }
+  ];
+  getFields(otherConfig = {}) {
+    let fields = [
+      {
+        groupLabel: '',
+        groupName: '',
+        groupSeq: '0',
+        groupType: '',
+        hasInnerGroup: true,
+        rows: [
+          {
+            fieldName: 'name',
+            fieldLabel: '',
+            fieldType: 'INPUT',
+            initValue: '',
+            required: '1',
+            placeholder: '请输入'
+          },
+          {
+            fieldName: 'password',
+            fieldLabel: '',
+            fieldType: 'INPUT',
+            initValue: '',
+            required: '1',
+            placeholder: '请输入',
+            initStyle: { rows: '22' }
+          }
+        ]
+      }
+    ];
+    return fields;
+  }
+  handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
@@ -22,7 +65,7 @@ class Login extends React.Component {
   };
 
   //注册用户
-  register = (e) => {
+  register = e => {
     e.preventDefault();
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
@@ -37,20 +80,25 @@ class Login extends React.Component {
         }
       }
     });
-  }
+  };
 
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
       <div className="login-wrapper">
-        <Form onSubmit={this.handleSubmit} className="login-form">
+        <GroupForm
+          fields={this.getFields()}
+          handleSubmit={this.handleSubmit}
+          btns={this.btns}
+        />
+        <Form onSubmit={this.handleSubmit}>
           <Form.Item>
             {getFieldDecorator('name', {
               rules: [{ required: true, message: '请输入名称！' }]
             })(
               <Input
                 prefix={
-                  <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }}/>
+                  <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
                 }
                 placeholder="请输入名称"
               />
@@ -77,7 +125,7 @@ class Login extends React.Component {
             >
               登录
             </Button>
-            <span style={{color: 'white'}}>或者</span>
+            <span style={{ color: 'white' }}>或者</span>
             <Button
               type="primary"
               onClick={this.register.bind(this)}
