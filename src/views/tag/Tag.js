@@ -4,6 +4,7 @@ import http from '../../utils/http';
 import AddTag from './AddTag';
 import styles from './Tag.module.css';
 import BasicTable from '../../components/BasicTable';
+import { queryTags, deleteTags } from '../../utils/urls';
 class MyTag extends React.Component {
   state = {
     visible: false,
@@ -51,8 +52,7 @@ class MyTag extends React.Component {
   }
   async handleOk() {
     let { tag } = this.state;
-    let url = '/api/tags/delete';
-    let returnObj = await http.post(url, { id: tag.id });
+    let returnObj = await http.post(deleteTags, { id: tag.id });
     if (returnObj.code === 200) {
       message.success(returnObj.message);
       this.setState({
@@ -84,8 +84,7 @@ class MyTag extends React.Component {
    * 获取表格数据
    */
   async fetchData() {
-    let url = '/api/tags/query';
-    let returnObj = await http.post(url);
+    let returnObj = await http.post(queryTags);
     if (returnObj.code === 200) {
       this.setState({
         tableData: returnObj.data

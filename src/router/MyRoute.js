@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Index from '../views/Index';
-import Header1 from '../components/layout/header.js';
 import Article from '../views/article/Article.js';
 import Dispatch from '../views/article/Dispatch.js';
 import Tag from '../views/tag/Tag.js';
@@ -16,19 +15,19 @@ let routes = [
       {
         path: '/index/Dispatch',
         component: Dispatch,
-        typeIcon: 'pie-chart',
+        typeIcon: 'weibo-circle',
         desc: '发文'
       },
       {
         path: '/index/Article',
         component: Article,
-        typeIcon: 'pie-chart',
+        typeIcon: 'book',
         desc: '文章管理'
       },
       {
         path: '/index/Tag',
         component: Tag,
-        typeIcon: 'pie-chart',
+        typeIcon: 'tags',
         desc: '标签管理'
       }
     ]

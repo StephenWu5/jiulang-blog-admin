@@ -1,0 +1,14 @@
+{
+  "code": 200,
+  "message": "发布成功",
+  "data": {
+    "id": 83,
+    "title": "121",
+    "content": "12",
+    "author": "root",
+    "author_id": 1,
+    "create_time": "2021-10-24, 10:57:52",
+    "status": 1,
+    "tags": "前端"
+  }
+}

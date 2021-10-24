@@ -3,6 +3,8 @@ import { Form, message, Card } from 'antd';
 import http from '../../utils/http';
 import  GroupForm from '../../components/GroupForm';
 import { getFields } from './config.js';
+import { get } from 'lodash';
+import { dispatchArticle, updateArticle, queryTags } from '../../utils/urls';
 // 发布文章
 class Dispatch extends React.Component {
   state = {
@@ -10,10 +12,12 @@ class Dispatch extends React.Component {
     formData: {} //表单详情值,
   };
   componentDidMount() {
-    this.mode = this.props.location.query === undefined ? 'Add' : 'Edit';
+    console.log(this.props.location.query);
+    const mode = get(this.props.location.query, 'mode', undefined);
+    this.mode = mode === undefined ? 'Add' : mode;
     this.fetchTagData();
     // 表单字段初始化
-    if (this.mode === 'Edit') {
+    if (this.mode === 'Edit' || this.mode === 'View') {
       let { title, content, tags } = this.props.location.query;
       let formData = {
         title,
@@ -27,7 +31,9 @@ class Dispatch extends React.Component {
   }
   mode = 'Add'; // 新增编辑模式
   // 其他配置
-  otherConfig = {};
+  otherConfig = {
+    tagsEnums: []
+  };
   // 按钮列表
   btns = [
     {
@@ -35,7 +41,8 @@ class Dispatch extends React.Component {
       text:  this.mode === 'Edit' ? '更新' : '发文'
     },
     {
-      name: 'save'
+      name: 'save',
+      text: '草稿'
     }
   ]
   // 发文提交
@@ -54,8 +61,8 @@ class Dispatch extends React.Component {
         };
     let url =
       this.mode === 'Add'
-        ? '/api/articles/dispatch'
-        : '/api/articles/update';
+        ? dispatchArticle
+        : updateArticle;
     let returnObj = await http.post(url, params);
     if (returnObj.code === 200) {
       //发文成功
@@ -79,8 +86,7 @@ class Dispatch extends React.Component {
    * 获取标签下拉值
    */
   async fetchTagData() {
-    let url = '/api/tags/query';
-    let returnObj = await http.post(url);
+    let returnObj = await http.post(queryTags);
     if (returnObj.code === 200) {
       this.otherConfig.tagsEnums = returnObj.data;
       this.setState({
@@ -92,7 +98,6 @@ class Dispatch extends React.Component {
       message.info(returnObj.message);
     }
   }
-  
   /**
    * 渲染函数
    * @returns
@@ -107,6 +112,7 @@ class Dispatch extends React.Component {
             handleSubmit={this.handleSubmit}
             formData={formData}
             btns={this.btns}
+            mode={this.mode}
           />
         </Card>
       </div>

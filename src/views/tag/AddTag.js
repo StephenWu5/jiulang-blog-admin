@@ -4,6 +4,7 @@ import { Form, message } from 'antd';
 import  GroupForm from '../../components/GroupForm';
 import http from '../../utils/http';
 import { getFields } from './config.js';
+import { createTags } from '../../utils/urls';
 /*
  *标签页--新增/编辑弹框
  */
@@ -49,11 +50,10 @@ class AddTagModal extends React.Component {
    * @param {*} values
    */
   handleSubmit = async (action, values) => {
-    let url = '/api/tags/create';
     this.setState({
       confirmLoading: true
     });
-    let returnObj = await http.post(url, values);
+    let returnObj = await http.post(createTags, values);
     this.setState({
       confirmLoading: false
     });

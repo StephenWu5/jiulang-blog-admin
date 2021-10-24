@@ -36,8 +36,9 @@ class GroupForm extends React.Component {
    * @returns
    */
   renderFormItem(field) {
-    const { form, formData = {} } = this.props;
+    const { form, formData = {}, mode } = this.props;
     const { getFieldDecorator } = form;
+    const readOnly = mode === 'View';
     const {
       fieldLabel,
       fieldName,
@@ -46,20 +47,20 @@ class GroupForm extends React.Component {
       fieldType,
       placeholder,
       enums,
-      initStyle
+      initStyle,
+      prefix
     } = field;
     let element;
     if (fieldType === 'INPUT') {
       // 输入框
-      element = <Input placeholder={placeholder} />;
+      element = <Input placeholder={placeholder} prefix={prefix} readOnly={readOnly}/>;
     } else if (fieldType === 'TEXTAREA') {
       // 文本域
-      element = <TextArea placeholder={placeholder} rows={initStyle.rows} />;
+      element = <TextArea placeholder={placeholder} rows={initStyle.rows}  readOnly={readOnly}/>;
     } else if (fieldType === 'SELECT') {
       // 下拉框
-      console.log(enums, 'enums');
       element = (
-        <Select placeholder={placeholder}>
+        <Select placeholder={placeholder} disabled={readOnly}>
           {enums.map((item) => (
             <Option value={item.name} key={item.id}>
               {item.name}
@@ -89,13 +90,13 @@ class GroupForm extends React.Component {
     const { form, handleSubmit } = this.props;
     form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
-        console.log(values, 'values');
         handleSubmit(action, values);
       }
     });
   }
   render() {
-    const { fields, btns } = this.props;
+    const { fields, btns, mode } = this.props;
+    const readOnly = mode === 'View';
     return (
       <Form className="dispatch-form" {...formItemLayout}>
         {fields.map((group, index) => (
@@ -113,50 +114,24 @@ class GroupForm extends React.Component {
         <Form.Item {...tailFormItemLayout}>
           {btns.map((btn, index) => {
             let element;
-            if (btn.name === 'submit') {
-              element = (
-                <Button
-                  type="primary"
-                  key={index}
-                  onClick={() => this.handleSubmit('submit')}
-                >
-                  {btn.text}
-                </Button>
-              );
-            } else if (btn.name === 'save') {
-              element = (
-                <Button
-                  type="primary"
-                  style={{ marginLeft: '20px' }}
-                  onClick={() => this.handleSubmit('save')}
-                  key={index}
-                >
-                  草稿
-                </Button>
-              );
-            } else if (btn.name === 'close') {
-              element = (
-                <Button
-                  type="primary"
-                  style={{ marginLeft: '20px' }}
-                  onClick={btn.onClick}
-                  key={index}
-                >
-                  {btn.text}
-                </Button>
-              );
-            } else if (btn.name === 'register') {
-              element = (
-                <Button
-                  type="primary"
-                  style={{ marginLeft: '20px' }}
-                  onClick={btn.onClick}
-                  key={index}
-                >
-                  {btn.text}
-                </Button>
-              );
-            }
+            // form表单提交函数
+            let fn = (event) => {
+              console.log(event, 'ev');
+              event.preventDefault();
+              event.stopPropagation();
+              this.handleSubmit(btn.name);
+            };
+            element = (
+              <Button
+                type="primary"
+                key={index}
+                onClick={btn.onClick || fn}
+                style={{ marginLeft: index === 0 ? 0 : 20 }}
+                disabled={readOnly}
+              >
+                {btn.text}
+              </Button>
+            );
             return element;
           })}
         </Form.Item>

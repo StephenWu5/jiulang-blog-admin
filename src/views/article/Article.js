@@ -1,7 +1,7 @@
 import React from 'react';
-import { Divider,  Button, message, Modal } from 'antd';
+import { Divider, Button, message, Modal } from 'antd';
 import http from '../../utils/http';
-import { queryArticle } from '../../utils/urls';
+import { queryArticle, deleteArticle } from '../../utils/urls';
 import BasicTable from '../../components/BasicTable';
 
 class Article extends React.Component {
@@ -12,7 +12,8 @@ class Article extends React.Component {
       visible: false,
       deleteId: null, // 待删除项
       deleteTitle: '', // 删除名称
-      pagination: { // 分页信息
+      pagination: {
+        // 分页信息
         pageSize: 10,
         current: 1,
         total: 0
@@ -64,7 +65,7 @@ class Article extends React.Component {
               <Button
                 type="primary"
                 size="small"
-                onClick={() => this.editOne(record)}
+                onClick={() => this.editOne(record, 'Edit')}
               >
                 编辑
               </Button>
@@ -77,7 +78,11 @@ class Article extends React.Component {
                 删除
               </Button>
               <Divider type="vertical" />
-              <Button type="dashed" size="small">
+              <Button
+                type="dashed"
+                size="small"
+                onClick={() => this.editOne(record, 'View')}
+              >
                 查看
               </Button>
             </span>
@@ -98,7 +103,8 @@ class Article extends React.Component {
   queryArticle = async (params) => {
     let returnObj = await http.post(queryArticle, params);
     if (returnObj.code === 200) {
-      const pagination = { // 分页信息
+      const pagination = {
+        // 分页信息
         pageSize: returnObj.pageSize,
         current: returnObj.current,
         total: returnObj.total
@@ -115,8 +121,8 @@ class Article extends React.Component {
     }
   };
 
-  editOne(record) {
-    this.props.history.push({ pathname: '/index/Dispatch', query: record });
+  editOne(record, mode) {
+    this.props.history.push({ pathname: '/index/Dispatch', query: {...record, mode}});
   }
 
   deleteOne(record) {
@@ -130,7 +136,7 @@ class Article extends React.Component {
   async handleOk() {
     const { pagination } = this.state;
     const param = { id: this.state.deleteId };
-    const returnObj = await http.post('/api/articles/delete', param);
+    const returnObj = await http.post(deleteArticle, param);
     if (returnObj.code === 200) {
       // 删除文章成功
       message.success(returnObj.message);

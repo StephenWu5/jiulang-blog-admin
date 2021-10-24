@@ -6,7 +6,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "start": "node ./server.js",
+    "start": "nodemon ./server.js",
     "build": "babel ./server.js --out-file server-compiled.js",
     "serve": "node server-compiled.js",
     "test": "echo \"Error: no test specified\" && exit 1"

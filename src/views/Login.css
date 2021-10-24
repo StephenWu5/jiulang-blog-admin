@@ -1,18 +1,14 @@
 .login-wrapper{
   text-align: center;
-  padding-top: 320px;
+  padding-top: 220px;
   background-image: url('./login-img.jpeg');
   background-repeat: no-repeat;
   height: 100%;
 } 
  
-.login-form {
-  max-width: 300px;
+ .login-form {
+  max-width: 600px;
+  text-align: left; 
   margin: 0 auto;
 }
-.login-form-forgot {
-  float: right;
-}
- .login-form-button {
-  width: 100%;
-}
+

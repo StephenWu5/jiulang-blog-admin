@@ -32,7 +32,7 @@ export function getFields(otherConfig){
         fieldName: 'tags',
         fieldLabel: '标签',
         fieldType: 'SELECT',
-        initValue: '',
+        initValue: otherConfig.tagsEnums[0] && otherConfig.tagsEnums[0].name || '', // 如果没有值，默认第一个
         required: '1',
         placeholder: '请选择',
         enums: otherConfig.tagsEnums || []
