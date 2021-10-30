@@ -1,14 +1,14 @@
-//let serverName  = 'dev'; // 本地环境
-let serverName = 'testing'; // 测试环境
+let serverName = 'dev'; // 本地环境
+//let serverName = 'testing'; // 测试环境
 //let serverName  = 'prod'; // 开发环境
 
 // 动态改变URL前边部分
 export function getUrlPrev(serverName) {
-  if (serverName === 'dev') {
-    return '/mock';
-  } else {
-    return '';
-  }
+    if (serverName === 'dev') {
+        return '/mock';
+    } else {
+        return '';
+    }
 }
 
 // 登录模块
@@ -25,6 +25,3 @@ export let updateArticle = getUrlPrev(serverName) + '/api/articles/update';
 export let queryTags = getUrlPrev(serverName) + '/api/tags/query';
 export let createTags = getUrlPrev(serverName) + '/api/tags/create';
 export let deleteTags = getUrlPrev(serverName) + '/api/tags/delete';
-
-
-
