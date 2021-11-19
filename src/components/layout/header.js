@@ -12,6 +12,7 @@ class Header extends React.Component {
   }
 
   UNSAFE_componentWillMount() {
+    console.log(Cookies.getJSON('resc'), 'Cookies');
     if (Cookies.getJSON('resc')) {
       let resc = Cookies.getJSON('resc').slice(2);
       resc = JSON.parse(resc);
