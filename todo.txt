@@ -1,0 +1,24 @@
+待处理：
+  面包霄的内容 ==
+  table 的新增处理，修改等。 ==
+  react如何让组件内部样式私有化   //使用 CSS Modules 的方式引入 ==
+
+    import React, { Component } from 'react';
+    import styles from './Button.module.css'; // 使用 CSS Modules 的方式引入
+    //在 css 文件后面加 .module 后缀
+    import './another-stylesheet.css'; // 普通引入
+    
+    class Button extends Component {
+      render() {
+        // reference as a js object
+        return <button className={styles.error}>Error Button</button>;
+      }
+    }
+  form的初始化值为啥不行 == 必须激活表单重新渲染，所以请使用 "true &&"  ==
+  子组件执行父组件的函数无法传正确的参数  == 箭头函数处理
+  本地模拟数据 ==
+  通用组件封装 ==
+  npm run build 部署到本地node服务器看看； ==
+  自己撸一个webpack脚手架
+  权限管理模块的添加
+

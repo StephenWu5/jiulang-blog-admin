@@ -1,0 +1,21 @@
+遇到的问题：
+  react__WEBPA CK_IMPORTED_MODULE_3__.memo is not a function
+     "antd"  降级 "^3.26.20",
+  antd样式不出效果
+    全局导入
+  路由怎么引入，无效，默认路由的问题
+    另外一个问题？动态路由怎么写
+    <Router>
+      <Switch>
+          <Route path="/" component={Index} exact />
+          <Route path="/index" component={Index}></Route>
+          <Route path="/login" component={Login}></Route>
+        </Switch>
+    </Router>
+  报错：Cannot destructure property 'getFieldDecorator' of 'this.props.form' as it is undefined.
+  react 跨域的问题
+    npm run eject 暴露配置文件
+    写好setupProxy.js 就行
+    https://blog.csdn.net/qq_43435403/article/details/109986164
+  登录注册
+    密码保存加盐处理
