@@ -13,7 +13,7 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 module.exports = merge(baseWebpackConfig, {
     mode: 'development',
     //开发环境,会将 process.env.NODE_ENV 的值设为 development。启用 NamedChunksPlugin 和 NamedModulesPlugin
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'module-cheap-eval-source-map',
     //不带列映射(column-map)的 SourceMap，将加载的 Source Map 简化为每行单独映射。.
     module: {
         rules: [
@@ -59,7 +59,6 @@ module.exports = merge(baseWebpackConfig, {
     //直接来说是把对应后缀名转化为css文件
     devServer: {
         //port: derServerPort, //指定要监听请求的端口号
-        //overlay: true,
         overlay: {
             //当编译器存在错误或警告时,将浏览器显示全屏覆盖
             warnings: true,

@@ -23,50 +23,60 @@ module.exports = {
             //     loader: 'eslint-loader'
             // },
             {
-                test: /\.(js|jsx)?$/,
-                use: [
+                //下面的loader只会匹配一个，处理性能更好
+                //注意：不能有两个配置处理同一种类型文件
+                oneOf: [
                     {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: [
-                                [
-                                    '@babel/preset-env',
-                                    {
-                                        useBuiltIns: 'usage',
-                                        corejs: {
-                                            //core-js的版本
-                                            version: 3
-                                        },
-                                        //需要兼容的浏览器
-                                        targets: {
-                                            chrome: '60',
-                                            firefox: '60',
-                                            ie: '9',
-                                            safari: '10',
-                                            edge: '17'
-                                        }
-                                    }
-                                ]
-                            ]
-                        }
-                    }
-                ],
-                //排除node_modules目录下的文件
-                exclude: /node_modules/,
-                include: SRC_PATH
-            },
-            {
-                test: /\.(woff|svg|eot|woff2|tff)$/,
-                use: [
+                        test: /\.(js|jsx)?$/,
+                        use: [
+                            'thread-loader',  //开启多进程打包
+                            {
+                                loader: 'babel-loader',
+                                options: {
+                                    presets: [
+                                        [
+                                            '@babel/preset-env',
+                                            {
+                                                useBuiltIns: 'usage',
+                                                corejs: {
+                                                    //core-js的版本
+                                                    version: 3
+                                                },
+                                                //需要兼容的浏览器
+                                                targets: {
+                                                    chrome: '60',
+                                                    firefox: '60',
+                                                    ie: '9',
+                                                    safari: '10',
+                                                    edge: '17'
+                                                }
+                                            }
+                                        ]
+                                    ],
+                                    // 开始babel 缓存
+                                    // 第二次开启才有效
+                                    cacheDirectory: true
+                                }
+                            }
+                        ],
+                        //排除node_modules目录下的文件
+                        exclude: /node_modules/,
+                        include: SRC_PATH
+                    },
                     {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 10000
-                        }
+                        test: /\.(woff|svg|eot|woff2|tff)$/,
+                        use: [
+                            {
+                                loader: 'url-loader',
+                                options: {
+                                    limit: 10000
+                                }
+                            }
+                        ],
+                        include: SRC_PATH,
+                        exclude: /node_modules/
                     }
-                ],
-                include: SRC_PATH,
-                exclude: /node_modules/
+                ]
             }
         ]
     },

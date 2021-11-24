@@ -13,13 +13,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = merge(baseWebpackConfig, {
     mode: 'production',
     //会将 process.env.NODE_ENV 的值设为 production。启用 FlagDependencyUsagePlugin, FlagIncludedChunksPlugin, ModuleConcatenationPlugin, NoEmitOnErrorsPlugin, OccurrenceOrderPlugin, SideEffectsFlagPlugin 和 UglifyJsPlugin.
-    devtool: 'cheap-module-source-map', //不带列映射(column-map)的 SourceMap，将加载的 Source Map 简化为每行单独映射。
+    devtool: 'modul-cheap-source-map', //不带列映射(column-map)的 SourceMap，将加载的 Source Map 简化为每行单独映射。
     output: {
-        filename: 'js/[name].[hash].js',
+        // 开启contenthash文件缓存
+        filename: 'js/[name].[contenthash:10].js',
         path: DIST_PATH
     },
     // 打包分离
     optimization: {
+        // 开启contenthash文件缓存
+        namedChunks: true,
         runtimeChunk: 'single',
         splitChunks: {
             chunks: 'all',
@@ -49,41 +52,47 @@ module.exports = merge(baseWebpackConfig, {
     module: {
         rules: [
             {
-                test: /\.css$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    { loader: 'css-loader' },
-                    { loader: 'postcss-loader' }
-                ]
-            },
-            {
-                test: /\.(sc|sa)ss$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    { loader: 'css-loader' },
-                    { loader: 'sass-loader' },
-                    { loader: 'postcss-loader' }
-                ]
-            },
-            {
-                test: /\.less$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    { loader: 'css-loader' },
-                    { loader: 'less-loader' },
-                    { loader: 'postcss-loader' }
-                ]
-            },
-            {
-                test: /\.(png|svg|jpg|gif|jpe?g)$/,
-                use: [
+                //下面的loader只会匹配一个，处理性能更好
+                //注意：不能有两个配置处理同一种类型文件
+                oneOf: [
                     {
-                        loader: 'file-loader',
-                        options: {
-                            limit: 10000,
-                            name: '[hash].[ext]',
-                            outputPath: 'images/'
-                        }
+                        test: /\.css$/,
+                        use: [
+                            MiniCssExtractPlugin.loader,
+                            { loader: 'css-loader' },
+                            { loader: 'postcss-loader' }
+                        ]
+                    },
+                    {
+                        test: /\.(sc|sa)ss$/,
+                        use: [
+                            MiniCssExtractPlugin.loader,
+                            { loader: 'css-loader' },
+                            { loader: 'sass-loader' },
+                            { loader: 'postcss-loader' }
+                        ]
+                    },
+                    {
+                        test: /\.less$/,
+                        use: [
+                            MiniCssExtractPlugin.loader,
+                            { loader: 'css-loader' },
+                            { loader: 'less-loader' },
+                            { loader: 'postcss-loader' }
+                        ]
+                    },
+                    {
+                        test: /\.(png|svg|jpg|gif|jpe?g)$/,
+                        use: [
+                            {
+                                loader: 'file-loader',
+                                options: {
+                                    limit: 10000,
+                                    name: '[hash].[ext]',
+                                    outputPath: 'images/'
+                                }
+                            }
+                        ]
                     }
                 ]
             }
@@ -103,10 +112,10 @@ module.exports = merge(baseWebpackConfig, {
             }
 
         }),
-        new BundleAnalyzerPlugin({//打包分析
-            analyzerPort: 10000,
-            openAnalyzer: true
-        }),
+        // new BundleAnalyzerPlugin({//打包分析
+        //     analyzerPort: 10000,
+        //     openAnalyzer: true
+        // }),
         new MiniCssExtractPlugin({//分离css
             filename: 'css/[name].[chunkhash:8].css',
             chunkFilename: 'css/[id].[hash].css'
