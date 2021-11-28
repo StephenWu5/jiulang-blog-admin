@@ -1,6 +1,7 @@
 const path = require('path');
 //利用require导入了node中path模块,path模块了一些处理文件路径的小工具，由于webpack是基于Node环境下的工具，所以可以直接使用node原生模块path
 const SRC_PATH = path.resolve(__dirname, '../src');
+
 //path.resolve()方法可以将路径或者路径片段解析成绝对路径，具体可以结合官方文档进行查看,综合来看，path.resolve()是一个修改和整合文件路径的方法，dirname是directory+name的缩写，故名思义，是文件名的意思。总的来说就是将绝对路径提取出来
 module.exports = {
     entry: {
@@ -8,7 +9,7 @@ module.exports = {
     },
     //入口起点(entry point)指示 webpack 应该使用哪个模块，来作为构建其内部依赖图的开始。进入入口起点后，webpack 会找出有哪些模块和库是入口起点（直接和间接）依赖的
     resolve: {
-        extensions: ['.vue', '.js'],
+        extensions: ['.js'],
         alias: {
             '@': SRC_PATH
         }
@@ -37,7 +38,7 @@ module.exports = {
                                         [
                                             '@babel/preset-env',
                                             {
-                                                useBuiltIns: 'usage',
+                                                useBuiltIns: 'usage', // 按需加载
                                                 corejs: {
                                                     //core-js的版本
                                                     version: 3
@@ -79,7 +80,5 @@ module.exports = {
                 ]
             }
         ]
-    },
-    plugins: [
-    ]
+    }
 };

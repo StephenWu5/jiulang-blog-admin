@@ -6,12 +6,12 @@ const baseWebpackConfig = require('./webpack.base.conf.js');
 //引入基础webpack设置。
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 //这是一个webpack插件，可以简化HTML文件的创建，为您的webpack捆绑服务提供服务。这对于webpack在文件名中包含哈希的包很有用，这些哈希值会更改每个编译。基本作用就是生成HTML。
-const derServerPort = 10000;
+const derServerPort = 8080;
 //开发环境的端口号。
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 //识别某些类别的webpack错误，并清理，聚合和优先级，以提供更好的开发人员体验。(友好的提示插件)。
 module.exports = merge(baseWebpackConfig, {
-    mode: 'development',
+    mode: 'development', // 指定开发环境
     //开发环境,会将 process.env.NODE_ENV 的值设为 development。启用 NamedChunksPlugin 和 NamedModulesPlugin
     devtool: 'module-cheap-eval-source-map',
     //不带列映射(column-map)的 SourceMap，将加载的 Source Map 简化为每行单独映射。.
@@ -58,7 +58,7 @@ module.exports = merge(baseWebpackConfig, {
     },
     //直接来说是把对应后缀名转化为css文件
     devServer: {
-        //port: derServerPort, //指定要监听请求的端口号
+        port: derServerPort, //指定要监听请求的端口号
         overlay: {
             //当编译器存在错误或警告时,将浏览器显示全屏覆盖
             warnings: true,
@@ -91,8 +91,7 @@ module.exports = merge(baseWebpackConfig, {
                 html5: true,
                 collapseWhitespace: true //把生成的 index.html 文件的内容的没用空格去掉，减少空间
             },
-            title:
-                '基于vue的webpack4教手架项目 准备在项目中采用vue-router、vuex、vant等技术(development开发环境)',
+            title: '旧浪博客',
             hash: true,
             showErrors: true
         }),

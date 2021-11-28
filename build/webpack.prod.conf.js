@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const DIST_PATH = path.resolve(__dirname, '../dist');
 const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -9,6 +10,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 //分离css
 const baseWebpackConfig = require('./webpack.base.conf.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const addAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
+const { resolve } = require('path');
+const WebpackBar = require('webpackbar');
 //引入基础webpack设置。
 module.exports = merge(baseWebpackConfig, {
     mode: 'production',
@@ -40,7 +44,6 @@ module.exports = merge(baseWebpackConfig, {
                             return `npm.${packageName.replace('@', '')}`;
                         } else {
                             // src的代码不分离
-                            // const moduleContext = module.context;
                             return 'src';
                         }
 
@@ -60,7 +63,22 @@ module.exports = merge(baseWebpackConfig, {
                         use: [
                             MiniCssExtractPlugin.loader,
                             { loader: 'css-loader' },
-                            { loader: 'postcss-loader' }
+                            // 使用loader的默认配置
+                            // 'postcss-loader',
+                            // 修改loader的配置
+                            {
+                                loader: 'postcss-loader',
+                                // 注意 postcss-loader3   postcss-loader4的写法不一样
+                                options: {
+                                    postcssOptions: {
+                                        ident: 'postcss',
+                                        plugins: [
+                                            // postcss的插件
+                                            require('postcss-preset-env')()
+                                        ]
+                                    }
+                                }
+                            }
                         ]
                     },
                     {
@@ -100,11 +118,20 @@ module.exports = merge(baseWebpackConfig, {
     },
     //与开发模式下基本相同,MiniCssExtraPlugin插件分离css文件
     plugins: [
-        new CleanWebpackPlugin({}), //每次打包前清除dist
+        new CleanWebpackPlugin({
+            root: path.resolve(__dirname, '../'),   //根目录
+            verbose: false,        　　　　　　　　　　//开启在控制台输出信息
+            cleanOnceBeforeBuildPatterns: [
+                '**/*',
+                '!dll',
+                '!dll/**'
+            ]
+        }),
+
         new HtmlWebpackPlugin({
             //将目录下的index.html引进生成的dist中的index.html
             template: 'public/index.html',
-            title: '基于vue的webpack4教手架项目 准备在项目中采用vue-router、vuex、vant等技术(product生产环境)',
+            title: '旧浪博客',
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,
@@ -112,14 +139,31 @@ module.exports = merge(baseWebpackConfig, {
             }
 
         }),
-        // new BundleAnalyzerPlugin({//打包分析
-        //     analyzerPort: 10000,
-        //     openAnalyzer: true
-        // }),
+        new BundleAnalyzerPlugin({//打包分析
+            analyzerPort: 10000,
+            openAnalyzer: true
+        }),
         new MiniCssExtractPlugin({//分离css
             filename: 'css/[name].[chunkhash:8].css',
             chunkFilename: 'css/[id].[hash].css'
-        })
-    ]
+        }),
+        // 告诉webpack 哪些包不需要打包
+        new webpack.DllReferencePlugin({
+            manifest: resolve(__dirname, '../dist/dll/vendor.manifest.json')
+        }),
+        // 把js CSS资源放在html上
+        new addAssetHtmlWebpackPlugin({
+            filepath: resolve(__dirname, '../dist/dll/vendor.dll.js')
+        }),
+        new WebpackBar() //显示进度
+    ],
+    stats: {
+        assets: false,
+        builtAt: false,
+        modules: false,
+        entrypoints: false,
+        warnings: true,
+        errors: true
+    }
 });
 
