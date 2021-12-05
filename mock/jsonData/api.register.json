@@ -1,0 +1,9 @@
+{
+  "code": 200,
+  "message": "注册成功",
+  "data": {
+    "id": 5,
+    "password": "b6282cc76679eddf5870bf7c7e7dcb9f",
+    "name": "121121"
+  }
+}

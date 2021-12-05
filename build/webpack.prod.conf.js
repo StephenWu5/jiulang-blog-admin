@@ -68,7 +68,7 @@ module.exports = merge(baseWebpackConfig, {
                             // 修改loader的配置
                             {
                                 loader: 'postcss-loader',
-                                // 注意 postcss-loader3   postcss-loader4的写法不一样
+                                // 下面一行注意 postcss-loader3   postcss-loader4的写法不一样
                                 options: {
                                     postcssOptions: {
                                         ident: 'postcss',
@@ -121,7 +121,7 @@ module.exports = merge(baseWebpackConfig, {
         new CleanWebpackPlugin({
             root: path.resolve(__dirname, '../'),   //根目录
             verbose: false,        　　　　　　　　　　//开启在控制台输出信息
-            cleanOnceBeforeBuildPatterns: [
+            cleanOnceBeforeBuildPatterns: [    // 不清除dll文件夹
                 '**/*',
                 '!dll',
                 '!dll/**'
@@ -133,6 +133,7 @@ module.exports = merge(baseWebpackConfig, {
             template: 'public/index.html',
             title: '旧浪博客',
             minify: {
+                // 删除一些注释空行
                 removeComments: true,
                 collapseWhitespace: true,
                 removeAttributeQuotes: true
@@ -155,8 +156,10 @@ module.exports = merge(baseWebpackConfig, {
         new addAssetHtmlWebpackPlugin({
             filepath: resolve(__dirname, '../dist/dll/vendor.dll.js')
         }),
-        new WebpackBar() //显示进度
+        //显示打包进度
+        new WebpackBar()
     ],
+    // 控制台打包信息的显示隐藏
     stats: {
         assets: false,
         builtAt: false,

@@ -1,34 +1,29 @@
 import React from 'react';
 import { Layout } from 'antd';
 import PropTypes from 'prop-types';
-import Header1 from '../components/layout/header.js';
-import Content1 from '../components/layout/content.js';
+const { Header, Footer, Sider, Content } = Layout;
+
+import SelfHeader from '../components/layout/header.js';
+import SelfContent from '../components/layout/content.js';
 import Slider from '../components/layout/Slider.js';
 import FooterContent from '../components/layout/footer.js';
 import './Index.css';
 
-const { Header, Footer, Sider, Content } = Layout;
 
 class Login extends React.Component {
     // 子组件声明自己需要使用 context
     static contextTypes = {
         children: PropTypes.array
     };
-
     // 父组件声明自己支持 context
     static childContextTypes = {
         menuItem: PropTypes.string,
         callback: PropTypes.func
     };
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            collapsed: false,
-            menuItem: '0' // 初始化menuItem高亮
-        };
-        this.setMenuItem = this.setMenuItem.bind(this);
-    }
+    state = {
+        collapsed: false,
+        menuItem: '0' // 初始化menuItem高亮
+    };
 
     static getDerivedStateFromProps(nextProps, prevState) {
         const { type } = nextProps;
@@ -46,10 +41,9 @@ class Login extends React.Component {
     getChildContext() {
         return {
             menuItem: this.state.menuItem,
-            callback: this.callback.bind(this)
+            callback: () => {}
         };
     }
-
     componentDidMount() {
         // 初始化路由menuItem的值
         this.setMenuItem(this.props.location);
@@ -58,42 +52,34 @@ class Login extends React.Component {
             this.setMenuItem(route);
         });
     }
-
-    setMenuItem(item) {
-        let { children } = this.context;
-        let index = children.findIndex((rItem) => rItem.path === item.pathname);
-        if (index === -1) {
-            index = 0;
-        }
+    setMenuItem = (item) => {
+        let index = this.context.children.findIndex((rItem) => rItem.path === item.pathname);
         this.setState({
-            menuItem: index.toString()
+            menuItem: index === -1 ? 0 : index.toString()
         });
     }
-
-    callback() {
-    }
-
     onCollapse = (collapsed) => {
         this.setState({ collapsed });
     };
-
     render() {
+        const { collapsed } = this.state;
+        const { history } = this.props;
         return (
             <Layout style={{ height: '100%' }}>
                 <Sider
                     style={{ color: 'white' }}
                     collapsible
-                    collapsed={this.state.collapsed}
+                    collapsed={collapsed}
                     onCollapse={this.onCollapse}
                 >
                     <Slider></Slider>
                 </Sider>
                 <Layout style={{ color: 'white' }}>
                     <Header>
-                        <Header1 history={this.props.history}></Header1>
+                        <SelfHeader history={history}></SelfHeader>
                     </Header>
                     <Content>
-                        <Content1 {...this.props}></Content1>
+                        <SelfContent {...this.props}></SelfContent>
                     </Content>
                     <Footer>
                         <FooterContent></FooterContent>
@@ -103,6 +89,4 @@ class Login extends React.Component {
         );
     }
 }
-
-
 export default Login;
