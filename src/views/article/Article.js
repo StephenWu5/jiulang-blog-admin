@@ -1,131 +1,129 @@
 import React from 'react';
 import { Divider, Button, message, Modal } from 'antd';
+
 import http from '../../utils/http';
 import { queryArticle, deleteArticle } from '../../utils/urls';
 import BasicTable from '../../components/BasicTable';
 
+// 文章组件
 class Article extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            tableData: [],
-            visible: false,
-            deleteId: null, // 待删除项
-            deleteTitle: '', // 删除名称
-            pagination: {
-                // 分页信息
-                pageSize: 10,
-                current: 1,
-                total: 0
-            },
-            // 表格列头的配置
-            columns: [
-                {
-                    title: '标题',
-                    dataIndex: 'title',
-                    key: 'title',
-                    render: (text) => <a>{text}</a>
-                },
-                {
-                    title: '作者',
-                    dataIndex: 'author',
-                    key: 'author'
-                },
-                {
-                    title: '标签',
-                    dataIndex: 'tags',
-                    key: 'tags'
-                },
-                {
-                    title: '阅读数',
-                    dataIndex: 'readingNumber',
-                    key: 'readingNumber'
-                },
-                {
-                    title: '评论数',
-                    dataIndex: 'commentsNumber',
-                    key: 'commentsNumber'
-                },
-                {
-                    title: '发表时间',
-                    dataIndex: 'create_time',
-                    key: 'create_time'
-                },
-                {
-                    title: '发布状态',
-                    dataIndex: 'status',
-                    key: 'status',
-                    render: (text) => <a>{text === '1' ? '已发布' : '草稿'}</a>
-                },
-                {
-                    title: '操作',
-                    key: 'action',
-                    render: (text, record) => (
-                        <span>
-                            <Button
-                                type="primary"
-                                size="small"
-                                onClick={() => this.editOne(record, 'Edit')}
-                            >
-                                编辑
-                            </Button>
-                            <Divider type="vertical" />
-                            <Button
-                                type="danger"
-                                size="small"
-                                onClick={() => this.deleteOne(record)}
-                            >
-                                删除
-                            </Button>
-                            <Divider type="vertical" />
-                            <Button
-                                type="dashed"
-                                size="small"
-                                onClick={() => this.editOne(record, 'View')}
-                            >
-                                查看
-                            </Button>
-                        </span>
-                    )
-                }
-            ]
-        };
-        this.queryArticle = this.queryArticle.bind(this);
-        this.handleOk = this.handleOk.bind(this);
-        this.handleCancel = this.handleCancel.bind(this);
-    }
+    state = {
+        tableData: [],
+        visible: false,
+        deleteId: null, // 待删除项Id
+        deleteTitle: '', // 删除名称
+        pagination: {
+            // 分页信息
+            pageSize: 10,
+            current: 1,
+            total: 0
+        }
+    };
+    // 表格列头的配置
+    columns = [
+        {
+            title: '标题',
+            dataIndex: 'title',
+            key: 'title',
+            render: (text) => <a>{text}</a>
+        },
+        {
+            title: '作者',
+            dataIndex: 'author',
+            key: 'author'
+        },
+        {
+            title: '标签',
+            dataIndex: 'tags',
+            key: 'tags'
+        },
+        {
+            title: '阅读数',
+            dataIndex: 'readingNumber',
+            key: 'readingNumber'
+        },
+        {
+            title: '评论数',
+            dataIndex: 'commentsNumber',
+            key: 'commentsNumber'
+        },
+        {
+            title: '发表时间',
+            dataIndex: 'create_time',
+            key: 'create_time'
+        },
+        {
+            title: '发布状态',
+            dataIndex: 'status',
+            key: 'status',
+            render: (text) => <a>{text === '1' ? '已发布' : '草稿'}</a>
+        },
+        {
+            title: '操作',
+            key: 'action',
+            render: (text, record) => (
+                <span>
+                    <Button
+                        type="primary"
+                        size="small"
+                        onClick={() => this.handleEditPage(record, 'Edit')}
+                    >
+                        编辑
+                    </Button>
+                    <Divider type="vertical" />
+                    <Button
+                        type="danger"
+                        size="small"
+                        onClick={() => this.handleDelete(record)}
+                    >
+                        删除
+                    </Button>
+                    <Divider type="vertical" />
+                    <Button
+                        type="dashed"
+                        size="small"
+                        onClick={() => this.handleEditPage(record, 'View')}
+                    >
+                        查看
+                    </Button>
+                </span>
+            )
+        }
+    ];
 
     componentDidMount() {
         const { pagination } = this.state;
         this.queryArticle(pagination);
     }
 
+    // 查询列表
     queryArticle = async (params) => {
-        let returnObj = await http.post(queryArticle, params);
-        if (returnObj.code === 200) {
+        let res = await http.post(queryArticle, params);
+        const { code, message: messageText } = res;
+        if (code === 200) {
             const pagination = {
                 // 分页信息
-                pageSize: returnObj.pageSize,
-                current: returnObj.current,
-                total: returnObj.total
+                pageSize: res.pageSize,
+                current: res.current,
+                total: res.total
             };
             // 查询文章成功
             this.setState({
-                tableData: returnObj.data,
+                tableData: res.data,
                 pagination
             });
-        } else if (returnObj.code === 400) {
-            message.info(returnObj.message);
+        } else if (code === 400) {
+            message.info(messageText);
         } else {
-            message.info(returnObj.message);
+            message.info(messageText);
         }
     };
 
-    editOne(record, mode) {
+    handleEditPage(record, mode) {
         this.props.history.push({ pathname: '/index/Dispatch', query: { ...record, mode } });
     }
 
-    deleteOne(record) {
+    handleDelete(record) {
         this.setState({
             visible: true,
             deleteId: record.id,
@@ -133,23 +131,24 @@ class Article extends React.Component {
         });
     }
 
-    async handleOk() {
+    handleOk = async () => {
         const { pagination } = this.state;
         const param = { id: this.state.deleteId };
-        const returnObj = await http.post(deleteArticle, param);
-        if (returnObj.code === 200) {
+        const res = await http.post(deleteArticle, param);
+        const { code, message: messageText } = res;
+        if (code === 200) {
             // 删除文章成功
-            message.success(returnObj.message);
+            message.success(messageText);
             this.queryArticle(pagination);
             this.handleCancel();
-        } else if (returnObj.code === 400) {
-            message.info(returnObj.message);
+        } else if (code === 400) {
+            message.info(messageText);
         } else {
-            message.info(returnObj.message);
+            message.info(messageText);
         }
     }
 
-    handleCancel() {
+    handleCancel = () => {
         this.setState({
             visible: false,
             deleteTitle: ''
@@ -157,7 +156,7 @@ class Article extends React.Component {
     }
 
     render() {
-        const { deleteTitle, columns, tableData, pagination } = this.state;
+        const { deleteTitle, columns, tableData, pagination, visible } = this.state;
         return (
             <div>
                 <BasicTable
@@ -168,7 +167,7 @@ class Article extends React.Component {
                 ></BasicTable>
                 <Modal
                     title="删除框"
-                    visible={this.state.visible}
+                    visible={visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                 >

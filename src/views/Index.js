@@ -20,6 +20,7 @@ class Login extends React.Component {
         menuItem: PropTypes.string,
         callback: PropTypes.func
     };
+    // 定义liangliangnihonihoa niahonihao nhoa
     state = {
         collapsed: false,
         menuItem: '0' // 初始化menuItem高亮

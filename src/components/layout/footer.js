@@ -4,10 +4,6 @@ class FooterContent extends React.Component {
         super(props);
     }
     render() {
-        console.log(1211);
-        console.log(1211);
-        console.log(1211);
-        console.log(1211);
         return '@博客后台管理系统(2021-2021)';
     }
 }

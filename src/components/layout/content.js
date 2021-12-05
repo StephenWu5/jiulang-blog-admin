@@ -10,56 +10,56 @@ import CreateBreadcrumb from '../sub/CreateBreadcrumb';
 // todo 试着把它改为函数式组件？
 
 class Content extends React.Component {
-  // 子组件声明自己需要使用 context
-  static contextTypes = {
-    children: PropTypes.array
-  }
-  constructor(props) {
-    super(props);
-  }
+    // 子组件声明自己需要使用 context
+    static contextTypes = {
+        children: PropTypes.array
+    }
+    constructor(props) {
+        super(props);
+    }
 
-  render() {
-    let { children } = this.context;
+    render() {
+        let { children } = this.context;
 
-    return (
-      <React.Fragment>
-        <div className={styles.contentWrapper}>
-          <CreateBreadcrumb
-            children={children}
-            FatherProps={this.props}
-          ></CreateBreadcrumb>
+        return (
+            <React.Fragment>
+                <div className={styles.contentWrapper}>
+                    <CreateBreadcrumb
+                        children={children}
+                        FatherProps={this.props}
+                    ></CreateBreadcrumb>
 
-          <Switch>
-            {children &&
-              children.map((route, key) => {
-                // console.log(route)
+                    <Switch>
+                        {children &&
+                            children.map((route, key) => {
+                                // console.log(route)
 
-                if (route.exact) {
-                  return (
-                    <MyRoute
-                      key={key}
-                      exact
-                      path={route.path}
-                      component={route.component}
-                    />
-                  );
-                } else {
-                  return (
-                    <MyRoute
-                      key={key}
-                      path={route.path}
-                      component={route.component}
-                    />
-                  );
-                }
-              })}
+                                if (route.exact) {
+                                    return (
+                                        <MyRoute
+                                            key={key}
+                                            exact
+                                            path={route.path}
+                                            component={route.component}
+                                        />
+                                    );
+                                } else {
+                                    return (
+                                        <MyRoute
+                                            key={key}
+                                            path={route.path}
+                                            component={route.component}
+                                        />
+                                    );
+                                }
+                            })}
 
-            <Route component={Dispatch}></Route>
-          </Switch>
-        </div>
-      </React.Fragment>
-    );
-  }
+                        <Route component={Dispatch}></Route>
+                    </Switch>
+                </div>
+            </React.Fragment>
+        );
+    }
 }
 
 export default Content;

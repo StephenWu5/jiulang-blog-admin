@@ -102,7 +102,7 @@ module.exports = {
         "react/prop-types": 0, //防止在React组件定义中丢失props验证
         "react/react-in-jsx-scope": 2, //使用JSX时防止丢失React
         "react/self-closing-comp": 0, //防止没有children的组件的额外结束标签
-        "react/sort-comp": 1, //强制组件方法顺序
+        "react/sort-comp": 0, //强制组件方法顺序
         "no-extra-boolean-cast": 0, //禁止不必要的bool转换
         "react/no-array-index-key": 0, //防止在数组中遍历中使用数组key做索引
         "react/no-deprecated": 1, //不使用弃用的方法
