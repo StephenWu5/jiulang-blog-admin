@@ -1,16 +1,14 @@
 import React from 'react';
 import { Avatar, Dropdown, Icon, Menu, message } from 'antd';
-import './header.css';
 import Cookies from 'js-cookie';
 
-class Header extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            personInfo: { name: '' }
-        };
-    }
+import './header.css';
 
+class Header extends React.PureComponent {
+    state = {
+        personInfo: { name: '' }
+    };
+    // 优化掉 UNSAFE_componentWillMount 这个方法
     UNSAFE_componentWillMount() {
         if (Cookies.getJSON('resc')) {
             let resc = Cookies.getJSON('resc').slice(2);
@@ -21,13 +19,11 @@ class Header extends React.Component {
             });
         }
     }
-
     logOut() {
         Cookies.remove('resc');
         message.success('退出成功');
         this.props.history.push({ pathname: '/login' });
     }
-
     menu = (
         <Menu onClick={this.logOut.bind(this)}>
             <Menu.Item key="1">

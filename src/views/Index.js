@@ -6,11 +6,11 @@ const { Header, Footer, Sider, Content } = Layout;
 import SelfHeader from '../components/layout/header.js';
 import SelfContent from '../components/layout/content.js';
 import Slider from '../components/layout/Slider.js';
-import FooterContent from '../components/layout/footer.js';
+import SelfFooter from '../components/layout/footer.js';
 import './Index.css';
 
 
-class Login extends React.Component {
+class Index extends React.Component {
     // 子组件声明自己需要使用 context
     static contextTypes = {
         children: PropTypes.array
@@ -42,7 +42,9 @@ class Login extends React.Component {
     getChildContext() {
         return {
             menuItem: this.state.menuItem,
-            callback: () => {}
+            callback: (menuItem) => {
+                this.setState({ menuItem: menuItem.toString() });
+            }
         };
     }
     componentDidMount() {
@@ -66,7 +68,7 @@ class Login extends React.Component {
         const { collapsed } = this.state;
         const { history } = this.props;
         return (
-            <Layout style={{ height: '100%' }}>
+            <Layout style={{ minHeight: '100vh' }}>
                 <Sider
                     style={{ color: 'white' }}
                     collapsible
@@ -82,12 +84,12 @@ class Login extends React.Component {
                     <Content>
                         <SelfContent {...this.props}></SelfContent>
                     </Content>
-                    <Footer>
-                        <FooterContent></FooterContent>
+                    <Footer style={{ textAlign: 'center', padding: '0px 50px' }}>
+                        <SelfFooter></SelfFooter>
                     </Footer>
                 </Layout>
             </Layout>
         );
     }
 }
-export default Login;
+export default Index;

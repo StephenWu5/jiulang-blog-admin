@@ -1,14 +1,15 @@
 import React from 'react';
-import { Modal } from 'antd';
-import { Form, message } from 'antd';
+import { Form, message, Modal } from 'antd';
+
 import GroupForm from '../../components/GroupForm';
 import http from '../../utils/http';
 import { getFields } from './config.js';
 import { createTags } from '../../utils/urls';
+
 /*
  *标签页--新增/编辑弹框
  */
-class AddTagModal extends React.Component {
+class AddTagModal extends React.PureComponent {
     static getDerivedStateFromProps(props) {
         return {
             visible: props.visible
@@ -25,13 +26,17 @@ class AddTagModal extends React.Component {
     };
     otherConfig = {};
     mode = 'Add';
-
+    /*
+     *显示弹框
+     */
     showModal = () => {
         this.setState({
             visible: true
         });
     };
-
+    /*
+     *隐藏弹框
+     */
     handleCancel = () => {
         const { hideAddTag } = this.props;
         // 清空form表单字段
@@ -42,30 +47,6 @@ class AddTagModal extends React.Component {
         );
         // 隐藏弹框
         hideAddTag();
-    };
-
-    /**
-     * 提交
-     * @param {*} action
-     * @param {*} values
-     */
-    handleSubmit = async (action, values) => {
-        this.setState({
-            confirmLoading: true
-        });
-        let returnObj = await http.post(createTags, values);
-        this.setState({
-            confirmLoading: false
-        });
-        if (returnObj.code === 200) {
-            //发布成功
-            message.success(returnObj.message);
-            this.handleCancel();
-        } else if (returnObj.code === 400) {
-            message.info(returnObj.message);
-        } else {
-            message.info(returnObj.message);
-        }
     };
     // 按钮列表
     btns = [
@@ -78,7 +59,30 @@ class AddTagModal extends React.Component {
             text: '关闭',
             onClick: this.handleCancel
         }
-    ]
+    ];
+    /**
+     * 提交
+     * @param {*} action
+     * @param {*} values
+     */
+    handleSubmit = async (action, values) => {
+        this.setState({
+            confirmLoading: true
+        });
+        const { code, message: messageText } = await http.post(createTags, values);
+        this.setState({
+            confirmLoading: false
+        });
+        if (code === 200) {
+            //发布成功
+            message.success(messageText);
+            this.handleCancel();
+        } else if (code === 400) {
+            message.info(messageText);
+        } else {
+            message.info(messageText);
+        }
+    };
     render() {
         const { visible, confirmLoading, formData } = this.state;
         return (

@@ -1,23 +1,24 @@
 import React from 'react';
-import { Menu, Icon } from 'antd';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { Menu, Icon } from 'antd';
 
-class Slider extends React.Component {
+class Slider extends React.PureComponent {
     // 子组件声明自己需要使用 context
     static contextTypes = {
         menuItem: PropTypes.string,
         callback: PropTypes.func,
         children: PropTypes.array
     };
-    constructor(props) {
-        // 必须在这里通过super调用父类的constructor
-        super(props);
-        // 给state赋值，可以使用props
-        this.state = {};
+    onClick = ({ item, key, keyPath, domEvent }) => {
+        this.context.callback(key);
+        // react 更新的 精华或者使用 antd的 setItem , 严禁使用 updateForce。
+        this.setState({
+            freshFlag: new Date().getTime()
+        });
     }
     render() {
-        let { children } = this.context;
+        const { children } = this.context;
         return (
             <React.Fragment>
                 <div className="logo" />
@@ -25,6 +26,7 @@ class Slider extends React.Component {
                     defaultSelectedKeys={this.context.menuItem}
                     selectedKeys={this.context.menuItem}
                     mode="inline"
+                    onClick={this.onClick}
                 >
                     {children &&
                         children.map((item, key) => (

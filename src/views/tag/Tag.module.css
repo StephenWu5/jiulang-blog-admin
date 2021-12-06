@@ -1,8 +1,7 @@
-
 .addButtonWrapper {
-  overflow: hidden;
+    overflow: hidden;
 }
-.addButton{
-  margin: 15px;
-  float: right;
+.addButton {
+    margin: 15px;
+    float: right;
 }

@@ -14,7 +14,7 @@ import './App.css';
 /**
  *
  */
-class App extends React.Component {
+class App extends React.PureComponent {
     // 父组件声明自己支持 context
     static childContextTypes = {
         children: PropTypes.array

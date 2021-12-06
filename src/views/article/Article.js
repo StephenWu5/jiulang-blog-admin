@@ -6,7 +6,7 @@ import { queryArticle, deleteArticle } from '../../utils/urls';
 import BasicTable from '../../components/BasicTable';
 
 // 文章组件
-class Article extends React.Component {
+class Article extends React.PureComponent {
     state = {
         tableData: [],
         visible: false,
@@ -98,18 +98,17 @@ class Article extends React.Component {
 
     // 查询列表
     queryArticle = async (params) => {
-        let res = await http.post(queryArticle, params);
-        const { code, message: messageText } = res;
+        const { code, message: messageText, data, pageSize, current, total } = await http.post(queryArticle, params);
         if (code === 200) {
             const pagination = {
                 // 分页信息
-                pageSize: res.pageSize,
-                current: res.current,
-                total: res.total
+                pageSize,
+                current,
+                total
             };
             // 查询文章成功
             this.setState({
-                tableData: res.data,
+                tableData: data,
                 pagination
             });
         } else if (code === 400) {
@@ -156,11 +155,11 @@ class Article extends React.Component {
     }
 
     render() {
-        const { deleteTitle, columns, tableData, pagination, visible } = this.state;
+        const { deleteTitle, tableData, pagination, visible } = this.state;
         return (
             <div>
                 <BasicTable
-                    columns={columns}
+                    columns={this.columns}
                     tableData={tableData}
                     query={this.queryArticle}
                     pagination={pagination}

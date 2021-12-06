@@ -6,7 +6,7 @@ import { login, register } from '../utils/urls';
 import http from '../utils/http';
 import './Login.css';
 
-class Login extends React.Component {
+class Login extends React.PureComponent {
     // 按钮列表
     btns = [
         {

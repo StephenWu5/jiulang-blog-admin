@@ -1,9 +1,9 @@
 import React from 'react';
 import { Table } from 'antd';
 /**
- * 通用组件--表格
+ * 通用组件--表格封装
  */
-class BasicTable extends React.Component {
+class BasicTable extends React.PureComponent {
     changePage(current) {
         const { query } = this.props;
         const { pageSize } = this.props.pagination;
@@ -23,7 +23,7 @@ class BasicTable extends React.Component {
     }
 
     render() {
-        const { columns, tableData } = this.props;
+        const { columns, tableData, scrollY = 650 } = this.props;
         const { pageSize, current, total } = this.props.pagination;
         const pagination = {
             showSizeChanger: true,
@@ -41,7 +41,8 @@ class BasicTable extends React.Component {
                     columns={columns}
                     dataSource={tableData}
                     pagination={pagination}
-                    rowKey={(record, index) => index}
+                    rowKey={(record, index) =>  record.id || index}
+                    scroll={{y: scrollY}}
                 />
             </div>
         );

@@ -1,11 +1,15 @@
 import React from 'react';
 import { Button, message, Modal } from 'antd';
+
 import http from '../../utils/http';
 import AddTag from './AddTag';
 import styles from './Tag.module.css';
 import BasicTable from '../../components/BasicTable';
 import { queryTags, deleteTags } from '../../utils/urls';
-class MyTag extends React.Component {
+/**
+ * 标签组件
+ */
+class TagPage extends React.PureComponent {
     state = {
         visible: false,
         tag: {},
@@ -17,9 +21,6 @@ class MyTag extends React.Component {
         },
         tableData: []
     };
-    componentDidMount() {
-        this.fetchData();
-    }
     columns = [
         {
             title: '标签名',
@@ -36,7 +37,7 @@ class MyTag extends React.Component {
                     <Button
                         type="danger"
                         size="small"
-                        onClick={() => this.deleteOne(record)}
+                        onClick={() => this.handleDeleteOne(record)}
                     >
                         删除
                     </Button>
@@ -44,25 +45,28 @@ class MyTag extends React.Component {
             )
         }
     ];
-    async deleteOne(record) {
+    componentDidMount() {
+        this.fetchData();
+    }
+    async handleDeleteOne(record) {
         this.setState({
             visible: true,
             tag: record
         });
     }
     async handleOk() {
-        let { tag } = this.state;
-        let returnObj = await http.post(deleteTags, { id: tag.id });
-        if (returnObj.code === 200) {
-            message.success(returnObj.message);
+        const { tag } = this.state;
+        const { code, message: messageText } = await http.post(deleteTags, { id: tag.id });
+        if (code === 200) {
+            message.success(messageText);
             this.setState({
                 visible: false
             });
             this.fetchData();
-        } else if (returnObj.code === 400) {
-            message.info(returnObj.message);
+        } else if (code === 400) {
+            message.info(messageText);
         } else {
-            message.info(returnObj.message);
+            message.info(messageText);
         }
     }
     handleCancel() {
@@ -76,7 +80,6 @@ class MyTag extends React.Component {
     }
     hideAddTag = (type) => {
         this.setState({ AddTagVisible: false });
-        console.log(type, 'type');
         type !== 'addSuccess' && this.fetchData();
         type === 'addSuccess' && this.fetchData();
     };
@@ -84,18 +87,17 @@ class MyTag extends React.Component {
      * 获取表格数据
      */
     async fetchData() {
-        let returnObj = await http.post(queryTags);
-        if (returnObj.code === 200) {
+        const { code, data, message: messageText } = await http.post(queryTags);
+        if (code === 200) {
             this.setState({
-                tableData: returnObj.data
+                tableData: data
             });
-        } else if (returnObj.code === 400) {
-            message.info(returnObj.message);
+        } else if (code === 400) {
+            message.info(messageText);
         } else {
-            message.info(returnObj.message);
+            message.info(messageText);
         }
     }
-
     render() {
         let { tableData, visible, AddTagVisible, tag, pagination } = this.state;
         return (
@@ -134,11 +136,11 @@ class MyTag extends React.Component {
         );
     }
 }
-export default MyTag;
+export default TagPage;
 // 函数式组件 ，后面重构；
-// export default function MyTag1() {
+// export default function TagPage1() {
 //   const [visible, setVisible] = useState(false); // 表格数据
-//   function deleteOne() {
+//   function handleDeleteOne() {
 //     setVisible(true);
 //   }
 //   function handleOk() {}
@@ -158,7 +160,7 @@ export default MyTag;
 //       key: 'action',
 //       render: (text, record) => (
 //         <span>
-//           <Button type="danger" size="small" onClick={() => deleteOne(record)}>
+//           <Button type="danger" size="small" onClick={() => handleDeleteOne(record)}>
 //             删除
 //           </Button>
 //         </span>

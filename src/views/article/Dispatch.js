@@ -8,7 +8,7 @@ import GroupForm from '../../components/GroupForm';
 import { getFields } from './config.js';
 
 // 发布文章
-class Dispatch extends React.Component {
+class Dispatch extends React.PureComponent {
     state = {
         tagsEnums: [], // 标签下拉值,
         formData: {} //表单详情值,

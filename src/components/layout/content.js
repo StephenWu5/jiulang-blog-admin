@@ -1,21 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
+
 import Dispatch from '../../views/article/Dispatch.js';
 import styles from './content.module.css';
 import { MyRoute } from '../../router/MyRoute.js';
-import PropTypes from 'prop-types';
 import CreateBreadcrumb from '../sub/CreateBreadcrumb';
 
 
 // todo 试着把它改为函数式组件？
-
-class Content extends React.Component {
+class Content extends React.PureComponent {
     // 子组件声明自己需要使用 context
     static contextTypes = {
         children: PropTypes.array
-    }
-    constructor(props) {
-        super(props);
     }
 
     render() {
@@ -28,12 +25,9 @@ class Content extends React.Component {
                         children={children}
                         FatherProps={this.props}
                     ></CreateBreadcrumb>
-
                     <Switch>
                         {children &&
                             children.map((route, key) => {
-                                // console.log(route)
-
                                 if (route.exact) {
                                     return (
                                         <MyRoute
@@ -61,5 +55,4 @@ class Content extends React.Component {
         );
     }
 }
-
 export default Content;

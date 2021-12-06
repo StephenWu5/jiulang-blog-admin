@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Input, Button, Select } from 'antd';
 const { TextArea } = Input;
 const { Option } = Select;
+
 /*
  *通用组件--Form封装
  */
@@ -29,7 +30,7 @@ const tailFormItemLayout = {
         }
     }
 };
-class GroupForm extends React.Component {
+class GroupForm extends React.PureComponent {
     /**
      * 渲染表格每一项输入
      * @param {*} field
@@ -116,7 +117,6 @@ class GroupForm extends React.Component {
                         let element;
                         // form表单提交函数
                         let fn = (event) => {
-                            console.log(event, 'ev');
                             event.preventDefault();
                             event.stopPropagation();
                             this.handleSubmit(btn.name);

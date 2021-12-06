@@ -1,5 +1,10 @@
 .contentWrapper {
-  margin: 20px;
+  margin-bottom: 20px; 
+  height: calc(100%);
+  box-sizing: border-box;
+  /* background-color: black; */
+  /* color: red; */
+  overflow: hidden;
 }
 
 .BreadcrumbWrapper{
