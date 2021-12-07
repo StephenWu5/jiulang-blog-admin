@@ -1,12 +1,12 @@
 .contentWrapper {
-  margin-bottom: 20px; 
-  height: calc(100%);
-  box-sizing: border-box;
-  /* background-color: black; */
-  /* color: red; */
-  overflow: hidden;
+    padding: 20px;
+    margin-bottom: 20px;
+    height: calc(100%);
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
-.BreadcrumbWrapper{
-  margin-bottom: 10px;
+.breadCrumbWrapper {
+    padding-bottom: 10px!important;
+    color: rgb(31, 29, 29)!important;
 }
