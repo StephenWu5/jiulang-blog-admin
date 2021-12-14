@@ -1,8 +1,12 @@
 import React from 'react';
+
+import styles from './footer.module.css';
+
 class FooterContent extends React.PureComponent {
     render() {
-        return '@博客后台管理系统(2021-2021)';
+        return <div className={styles.footerWrapper}>
+            @旧浪博客2019-12～2021-12
+        </div>;
     }
 }
-
 export default FooterContent;

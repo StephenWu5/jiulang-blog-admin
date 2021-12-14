@@ -3,21 +3,20 @@ import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 
 import Dispatch from '../../views/article/Dispatch.js';
-import styles from './content.module.css';
 import { MyRoute } from '../../router/MyRoute.js';
 import CreateBreadcrumb from '../sub/CreateBreadcrumb';
+import styles from './content.module.css';
 
-
-// todo 试着把它改为函数式组件？
+/**
+ * 内容区组件
+ */
 class Content extends React.PureComponent {
     // 子组件声明自己需要使用 context
     static contextTypes = {
         children: PropTypes.array
     }
-
     render() {
         let { children } = this.context;
-
         return (
             <React.Fragment>
                 <div className={styles.contentWrapper}>

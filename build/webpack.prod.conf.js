@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const DIST_PATH = path.resolve(__dirname, '../dist');
+const DIST_PATH2 = path.resolve(__dirname, '../../my-blog-node/build');
 const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 //打包之前清除文件
@@ -21,7 +22,7 @@ module.exports = merge(baseWebpackConfig, {
     output: {
         // 开启contenthash文件缓存
         filename: 'js/[name].[contenthash:10].js',
-        path: DIST_PATH
+        path: DIST_PATH2
     },
     // 打包分离
     optimization: {
@@ -38,15 +39,20 @@ module.exports = merge(baseWebpackConfig, {
                     name(module) {
                         // get the name. E.g. node_modules/packageName/not/this/part.js
                         // or node_modules/packageName
-                        if (module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)) {
-                            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+                        if (
+                            module.context.match(
+                                /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+                            )
+                        ) {
+                            const packageName = module.context.match(
+                                /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+                            )[1];
                             // npm package names are URL-safe, but some servers don't like @ symbols
                             return `npm.${packageName.replace('@', '')}`;
                         } else {
                             // src的代码不分离
                             return 'src';
                         }
-
                     }
                 }
             }
@@ -62,6 +68,43 @@ module.exports = merge(baseWebpackConfig, {
                         test: /\.css$/,
                         use: [
                             MiniCssExtractPlugin.loader,
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                    localIdentName:
+                                        '[name]-[local]-[hash:base64:3]',
+                                    modules: true
+                                }
+                            },
+                            // 使用loader的默认配置
+                            // 'postcss-loader',
+                            // 修改loader的配置
+                            {
+                                loader: 'postcss-loader',
+                                // 下面一行注意 postcss-loader3   postcss-loader4的写法不一样
+                                options: {
+                                    postcssOptions: {
+                                        ident: 'postcss',
+                                        plugins: [
+                                            // postcss的插件
+                                            require('postcss-preset-env')()
+                                        ]
+                                    }
+                                }
+                            }
+                        ],
+                        exclude: /node_modules/,
+                        include: /\.module\./
+                    },
+                    {
+                        test: /\.css$/,
+                        use: [
+                            {
+                                loader: MiniCssExtractPlugin.loader,
+                                options: {
+                                    publicPath: '../'
+                                }
+                            },
                             { loader: 'css-loader' },
                             // 使用loader的默认配置
                             // 'postcss-loader',
@@ -79,7 +122,8 @@ module.exports = merge(baseWebpackConfig, {
                                     }
                                 }
                             }
-                        ]
+                        ],
+                        exclude: /\.module\./
                     },
                     {
                         test: /\.(sc|sa)ss$/,
@@ -107,7 +151,8 @@ module.exports = merge(baseWebpackConfig, {
                                 options: {
                                     limit: 10000,
                                     name: '[hash].[ext]',
-                                    outputPath: 'images/'
+                                    outputPath: 'images/',
+                                    pulicPath: resolve(__dirname) + 'build/images'
                                 }
                             }
                         ]
@@ -119,9 +164,10 @@ module.exports = merge(baseWebpackConfig, {
     //与开发模式下基本相同,MiniCssExtraPlugin插件分离css文件
     plugins: [
         new CleanWebpackPlugin({
-            root: path.resolve(__dirname, '../'),   //根目录
-            verbose: false,        　　　　　　　　　　//开启在控制台输出信息
-            cleanOnceBeforeBuildPatterns: [    // 不清除dll文件夹
+            root: path.resolve(__dirname, '../'), //根目录
+            verbose: false, //开启在控制台输出信息
+            cleanOnceBeforeBuildPatterns: [
+                // 不清除dll文件夹
                 '**/*',
                 '!dll',
                 '!dll/**'
@@ -138,13 +184,14 @@ module.exports = merge(baseWebpackConfig, {
                 collapseWhitespace: true,
                 removeAttributeQuotes: true
             }
-
         }),
-        new BundleAnalyzerPlugin({//打包分析
+        new BundleAnalyzerPlugin({
+            //打包分析
             analyzerPort: 10000,
             openAnalyzer: true
         }),
-        new MiniCssExtractPlugin({//分离css
+        new MiniCssExtractPlugin({
+            //分离css
             filename: 'css/[name].[chunkhash:8].css',
             chunkFilename: 'css/[id].[hash].css'
         }),

@@ -1,8 +1,4 @@
 .footerWrapper {
-  color: "red";
-  background-color: '#ccc';
+    color:black;
+    background-color: #ccc;
 }
-.ant-layout-footer{
-    padding: 5px 50px!important;
-}
-

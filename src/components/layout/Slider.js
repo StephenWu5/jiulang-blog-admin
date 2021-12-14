@@ -10,7 +10,7 @@ class Slider extends React.PureComponent {
         callback: PropTypes.func,
         children: PropTypes.array
     };
-    onClick = ({ item, key, keyPath, domEvent }) => {
+    handleClick = ({ item, key, keyPath, domEvent }) => {
         this.context.callback(key);
         // react 更新的 精华或者使用 antd的 setItem , 严禁使用 updateForce。
         this.setState({
@@ -18,29 +18,31 @@ class Slider extends React.PureComponent {
         });
     }
     render() {
-        const { children } = this.context;
+        const { children, menuItem } = this.context;
         return (
             <React.Fragment>
                 <div className="logo" />
                 <Menu theme="dark"
-                    defaultSelectedKeys={this.context.menuItem}
-                    selectedKeys={this.context.menuItem}
+                    defaultSelectedKeys={menuItem}
+                    selectedKeys={menuItem}
                     mode="inline"
-                    onClick={this.onClick}
+                    onClick={this.handleClick}
                 >
                     {children &&
-                        children.map((item, key) => (
-                            <Menu.Item key={key}>
-                                <Link to={item.path}>
-                                    <Icon type={item.typeIcon} />
-                                    <span>{item.desc}</span>
-                                </Link>
-                            </Menu.Item>
-                        ))}
+                        children.map((item, key) => {
+                            const { path, typeIcon, desc } = item;
+                            return (
+                                <Menu.Item key={key}>
+                                    <Link to={path}>
+                                        <Icon type={typeIcon} />
+                                        <span>{desc}</span>
+                                    </Link>
+                                </Menu.Item>
+                            )
+                        })}
                 </Menu>
             </React.Fragment>
         );
     }
 }
-
 export default Slider;

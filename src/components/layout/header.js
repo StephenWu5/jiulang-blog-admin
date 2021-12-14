@@ -8,8 +8,10 @@ class Header extends React.PureComponent {
     state = {
         personInfo: { name: '' }
     };
-    // 优化掉 UNSAFE_componentWillMount 这个方法
-    UNSAFE_componentWillMount() {
+    /**
+     * 个人信息初始化
+     */
+    personInfoInit() {
         if (Cookies.getJSON('resc')) {
             let resc = Cookies.getJSON('resc').slice(2);
             resc = JSON.parse(resc);
@@ -24,7 +26,7 @@ class Header extends React.PureComponent {
         message.success('退出成功');
         this.props.history.push({ pathname: '/login' });
     }
-    menu = (
+    getMenu = (
         <Menu onClick={this.logOut.bind(this)}>
             <Menu.Item key="1">
                 <Icon type="user" />
@@ -32,12 +34,15 @@ class Header extends React.PureComponent {
             </Menu.Item>
         </Menu>
     );
-
+    componentDidMount() {
+        this.personInfoInit();
+    }
     render() {
+        const {  name } =  this.state.personInfo || '';
         return (
             <div className="content">
-                <span className="header-name">{this.state.personInfo.name}</span>
-                <Dropdown overlay={this.menu}>
+                <span className="header-name">{name}</span>
+                <Dropdown overlay={this.getMenu}>
                     <Avatar size={32} icon="user">
                         <Icon type="down" />
                     </Avatar>
