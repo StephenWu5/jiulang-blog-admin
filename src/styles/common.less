@@ -1,0 +1,91 @@
+/* 公共样式 */
+.ant-layout {
+    overflow: auto;
+}
+
+body {
+    overflow: hidden !important;
+}
+
+// 滚动table样式
+.scroll-table-wrap {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    .ant-table-wrapper {
+        flex: 1;
+        overflow: hidden;
+        div {
+            height: 100%;
+        }
+        // table组件的th 不换行
+        .ant-table-thead th {
+            white-space: nowrap;
+        }
+        .ant-table-body {
+            word-wrap: break-word;
+            overflow: auto !important;
+        }
+        .ant-table-empty {
+            .ant-table-body {
+                height: auto;
+            }
+            .ant-table-placeholder {
+                height: auto;
+                margin-top: 100px;
+                border: 0;
+                div {
+                    height: auto;
+                }
+            }
+        }
+    }
+    .scroll-table-page {
+        display: block;
+        margin-top: 10px;
+        text-align: right;
+    }
+}
+
+// table组件内容不换行
+.table-nowrap .ant-table-content {
+    th, td {
+        min-width: 10px;
+        max-width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        div {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+}
+
+.main-table {
+    background-color: #f5f5f5;
+    > .scroll-table-page {
+        display: block;
+        padding: 10px 10px 10px 0px;
+        text-align: right;
+    }
+    .ant-table-small > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th {
+        padding:  8px 4px !important;
+    }
+}
+
+.main-table-div {
+    padding: 10px 10px 0 10px;
+    background-color: #fff;
+}
+
+.main-table-thead {
+    height: 54px;
+    background: #d7d7d7;
+}
+
+.ant-table-small > .ant-table-content > .ant-table-body {
+    margin: 0 0;
+}

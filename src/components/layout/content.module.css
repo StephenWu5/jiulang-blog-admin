@@ -1,9 +1,6 @@
 .contentWrapper {
     padding: 20px;
-    margin-bottom: 20px;
-    height: calc(100%);
     box-sizing: border-box;
-    overflow: hidden;
 }
 
 .breadCrumbWrapper {

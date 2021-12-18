@@ -11,6 +11,7 @@ import { ConfigProvider } from 'antd';
 import { MyRoute, routes } from './router/MyRoute.js';
 import Login from './views/Login';
 import './App.css';
+import './styles/common.less';
 /**
  *
  */

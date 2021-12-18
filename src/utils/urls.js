@@ -1,5 +1,5 @@
-const serverName = 'dev'; // 本地环境
-// const serverName = 'testing'; // 测试环境
+// const serverName = 'dev'; // 本地环境
+const serverName = 'testing'; // 测试环境
 // const serverName  = 'prod'; // 生产环境
 
 // 动态改变URL前边部分

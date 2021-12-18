@@ -99,6 +99,11 @@ module.exports = merge(baseWebpackConfig, {
                 target: 'http://localhost:5000',
                 changeOrigin: true,
                 pathRewrite: { '^mock': '/mock' }
+            },
+            '/': {
+                target: 'http://localhost:8081',
+                changeOrigin: true
+                //pathRewrite: { '^mock': '/mock' }
             }
         }
     },
