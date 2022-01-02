@@ -4,3 +4,11 @@
 /dist/
 #/build/
 /.idea/
+
+tags                   # 仓库中所有名为 tags 的文件都屏蔽
+cscope.*                 # 仓库中所有以 'cscope.*                 # 仓库中所有以 'core.' 开头的文件都屏蔽
+.' 开头的文件都屏蔽
+cscope.files
+cscope.in.out
+cscope.out
+cscope.po.out
