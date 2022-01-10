@@ -16,5 +16,26 @@
         "@babel/plugin-proposal-function-bind",
         "@babel/plugin-syntax-dynamic-import",
         "@babel/plugin-syntax-jsx"
-    ]
+    ],
+    "env": {
+        "test": {
+            "presets":[
+                ["@babel/preset-env", {
+                    "modules": "auto",
+                    "targets": {
+                        "node": "current"
+                    }
+                }],
+                "@babel/preset-react"
+            ],
+            "plugins":[
+                ["@babel/plugin-proposal-decorators", { "legacy": true }],
+                ["@babel/plugin-proposal-class-properties",{"loose":true}],
+                "@babel/plugin-transform-runtime",
+                "@babel/plugin-proposal-function-bind",
+                "@babel/plugin-syntax-dynamic-import",
+                "@babel/plugin-syntax-jsx"
+            ],
+        }
+      }
 }
