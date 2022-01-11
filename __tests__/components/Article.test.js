@@ -2,9 +2,14 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import sinon from 'sinon';
 import nock from 'nock';
+// 这两句加在测试文件头部
+import axios from 'axios';
+jest.mock('axios');
 import * as defaultSettingsUtil from '../../src/utils/defaultSettingsUtil';
 import Article from '../../src/views/article/Article';
 import http from '../../src/utils/http';
+
+
 
 import fetch from 'isomorphic-fetch';
 import qs from 'querystring';
@@ -78,16 +83,23 @@ const fetcher = {
 /* 测试 UI 组件 Article */
 describe('Article component', () => {
     test('when componentDidMount and tableData is empty, should query', async () => {
-        nock('http://127.0.0.1:5000')
-            .get('/mock')
-            .reply(200, {
-                status: 200, data: {
-                    name: 'name'
-                }
-            });
-        const result = await http.get('http://127.0.0.1:5000/mock');
-        console.log(result, 'result');
-        return expect('result').resolves.toMatch(/^hello.+$/);
+        // nock('http://127.0.0.1:5000')
+        //     .post('/mock')
+        //     .reply(200, { success: true, result: 'hello, world' });
+        // const result = fetcher.postJSON('http://127.0.0.1:5000/mock');
+        // console.log(result, 'result');
+        // return expect(result).resolves.toMatch(/^hello.+$/);
+
+        // 模拟第一次接收到的数据
+        axios.post.mockResolvedValueOnce({
+            data: '123'
+        });
+        // 模拟每一次接收到的数据
+        axios.post.mockResolvedValue({
+            data: '456'
+        });
+        const result = await http.post('http://127.0.0.1:5000/mock');
+        return expect(result).resolves.toMatch('123');
 
         // sinon.spy(Article.prototype, 'componentDidMount');
         // // 对React组件的测试自定义方法

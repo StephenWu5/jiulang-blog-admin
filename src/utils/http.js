@@ -96,11 +96,8 @@ function checkStatus(response) {
 
 export default {
     post(url, params) {
-        return axios({
-            method: 'post',
-            url,
-            data: params
-        }).then((response) => checkStatus(response)).catch(err => {
+        // return axios.post(url).then(res => res.data);
+        return axios.post(url).then(response => checkStatus(response)).catch(err => {
             return new Promise((resolve, reject) => {
                 resolve(err);
                 console.log(err);
