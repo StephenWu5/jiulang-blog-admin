@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import sinon from 'sinon';
 import { Table, Pagination } from 'antd';
 import * as defaultSettingsUtil from '../../src/utils/defaultSettingsUtil';
@@ -45,9 +45,6 @@ describe('BasicTable component', () => {
     /* 测试首次加载时数据列表为空是否发起加载数据请求 */
     test('when componentDidMount and tableData is empty, should query', () => {
         sinon.spy(BasicTable.prototype, 'componentDidMount');
-        // 这里还有问题
-        // 使用Enzyme和Sinon调用了对React组件的测试自定义方法
-        // sinon.stub(BasicTable.prototype, 'calcRect');
         const props = Object.assign({}, defaultProps, {
             pagination: Object.assign({}, {
                 current: 1,
@@ -56,10 +53,16 @@ describe('BasicTable component', () => {
             }, defaultSettingsUtil.pagination),
             tableData: []
         });
-        const wrapper = mount(<BasicTable {...props} />);
+        // let wrapper = mount(<BasicTable {...props} />);
 
-        expect(BasicTable.prototype.componentDidMount.calledOnce).toBe(true);
-        // expect(BasicTable.prototype.calcRect.calledOnce).toBe(true);
+        // expect(BasicTable.prototype.componentDidMount.calledOnce).toBe(true);
+        // expect(wrapper.instance().state.height).toBeGreaterThan(0);
+        // 对React组件的测试自定义方法
+        const wrapper = mount(<BasicTable {...props} />);
+        // wrapper.instance().calcRect(12);
+        wrapper.instance().changeTestNumber(12);
+        // wrapper.setState({ height: 2 });
+        expect(wrapper.state().testNumber).toBeGreaterThan(3);
         BasicTable.prototype.componentDidMount.restore();
     });
 

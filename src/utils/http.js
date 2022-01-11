@@ -19,14 +19,14 @@ function showLoading() {
 }
 // 隐藏加载动画
 function hideLoading() {
-    document.body.removeChild(document.getElementById('loading'));
+    // document.body.removeChild(document.getElementById('loading'));
 }
 // 默认域名
 // axios.defaults.baseURL = "http://10.26.4.123:8080/api/";
 // 配置请求头
 axios.defaults.headers['Content-Type'] = 'application/json';
 // 响应时间
-axios.defaults.timeout = 10000;
+axios.defaults.timeout = 15000;
 //请求拦截器
 axios.interceptors.request.use(
     (config) => {
@@ -71,6 +71,7 @@ axios.interceptors.response.use(
 
 // 处理请求返回的数据
 function checkStatus(response) {
+    console.log(response, 'response11111111111111111111111111111111111111111111111111111');
     return new Promise((resolve, reject) => {
         if (
             response &&
@@ -99,7 +100,12 @@ export default {
             method: 'post',
             url,
             data: params
-        }).then((response) => checkStatus(response));
+        }).then((response) => checkStatus(response)).catch(err => {
+            return new Promise((resolve, reject) => {
+                resolve(err);
+                console.log(err);
+            });
+        });
     },
     get(url, params) {
         return axios({

@@ -7,7 +7,8 @@ import { debounce } from 'lodash';
 class BasicTable extends React.PureComponent {
     state = {
         height: 0,
-        tableData: null
+        tableData: null,
+        testNumber: 0
     };
     divCon = React.createRef();
     static getDerivedStateFromProps = (props, state) => {
@@ -37,13 +38,19 @@ class BasicTable extends React.PureComponent {
         };
         query(pagination); //向后端发送请求
     }
+    changeTestNumber(testNumber){
+        this.setState({
+            testNumber
+        });
+    }
     // table高度自适配的开始
-    calcRect = () => {
+    calcRect = (myHeight) => {
         const current = this.divCon.current;
         if (current) {
             const rects = current.getBoundingClientRect();
+            myHeight && console.log(myHeight, 'myHeight');
             this.setState({
-                height: window.innerHeight - 44 - rects.top
+                height: myHeight || (window.innerHeight - 44 - rects.top)
             });
         }
     }
