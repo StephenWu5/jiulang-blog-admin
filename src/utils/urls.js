@@ -1,6 +1,6 @@
-// const serverName = 'dev'; // 本地环境
-// const serverName = 'testing'; // 测试环境
-const serverName  = 'prod'; // 生产环境
+//const serverName = 'dev'; // 本地环境
+const serverName = 'testing'; // 测试环境
+// const serverName  = 'prod'; // 生产环境
 
 // 动态改变URL前边部分
 export function getUrlPrev(serverName) {
@@ -10,6 +10,7 @@ export function getUrlPrev(serverName) {
         // return '';
         return 'http://127.0.0.1:5000/mock';
     } else {
+        // 测试环境
         return '';
     }
 }

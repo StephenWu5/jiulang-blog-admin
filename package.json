@@ -8,9 +8,9 @@
         "start": "concurrently 'cross-env webpack-dev-server --config build/webpack.dev.conf.js'  'cd mock && npm run start'",
         "build": "cross-env webpack --config build/webpack.prod.conf.js",
         "dll": "cross-env webpack --config build/webpack.dll.conf.js",
-        "test": "jest --config .jest.js",
+        "test": "jest --config .jest.js --watchAll",
         "test:update": "jest --config .jest.js --no-cache --update-snapshot",
-        "test:watch": "jest --config .jest.js --watch",
+        "test:watch": "jest --config .jest.js --watchAll",
         "test:coverage": "jest --config .jest.js --runInBand --coverage --ci",
         "test:report": "jest --config .jest.js --coverage && open ./coverage/lcov-report/index.html"
     },

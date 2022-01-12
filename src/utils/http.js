@@ -19,12 +19,13 @@ function showLoading() {
 }
 // 隐藏加载动画
 function hideLoading() {
-    // document.body.removeChild(document.getElementById('loading'));
+    document.body.removeChild(document.getElementById('loading'));
 }
 // 默认域名
 // axios.defaults.baseURL = "http://10.26.4.123:8080/api/";
 // 配置请求头
 axios.defaults.headers['Content-Type'] = 'application/json';
+// axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 // 响应时间
 axios.defaults.timeout = 15000;
 //请求拦截器
@@ -71,7 +72,6 @@ axios.interceptors.response.use(
 
 // 处理请求返回的数据
 function checkStatus(response) {
-    console.log(response, 'response11111111111111111111111111111111111111111111111111111');
     return new Promise((resolve, reject) => {
         if (
             response &&
@@ -94,15 +94,20 @@ function checkStatus(response) {
     });
 }
 
+import qs from 'qs'
+
+
+const self = this;
 export default {
     post(url, params) {
-        // return axios.post(url).then(res => res.data);
-        return axios.post(url).then(response => checkStatus(response)).catch(err => {
-            return new Promise((resolve, reject) => {
-                resolve(err);
-                console.log(err);
-            });
-        });
+        // 这里需要做动态改变
+        return axios({
+            method: 'post',
+            url,
+            data: params
+        }).then(response => checkStatus(response));
+        // 单元测试
+        return axios.post(url, qs.stringify(params)).then(response => checkStatus(response));
     },
     get(url, params) {
         return axios({

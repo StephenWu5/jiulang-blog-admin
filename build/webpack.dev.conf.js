@@ -95,15 +95,17 @@ module.exports = merge(baseWebpackConfig, {
         useLocalIp: false, //此选项允许浏览器使用你的本地ip打开
         proxy: {
             //代理服务器
+            //本地开发
             '/mock': {
                 target: 'http://localhost:5000',
                 changeOrigin: true,
                 pathRewrite: { '^mock': '/mock' }
             },
+            //连接测试环境
             '/': {
                 target: 'http://localhost:8081',
                 changeOrigin: true
-                //pathRewrite: { '^mock': '/mock' }
+                //pathRewrite: { '^test': '/test' }
             }
         }
     },

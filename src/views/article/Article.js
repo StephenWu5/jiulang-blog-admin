@@ -1,11 +1,9 @@
 import React from 'react';
 import { Divider, Button, message, Modal } from 'antd';
-import nock from 'nock';
 
 import http from '../../utils/http';
 import { queryArticle, deleteArticle } from '../../utils/urls';
 import BasicTable from '../../components/BasicTable';
-
 
 // 文章组件
 class Article extends React.PureComponent {
@@ -100,10 +98,6 @@ class Article extends React.PureComponent {
 
     // 查询列表
     queryArticle = async (params) => {
-        nock('http://127.0.0.1:5000')
-            .post('/mock/api/articles/query')
-            .reply(200, { success: true, result: 'hello, world' });
-        console.log(queryArticle, 'queryArticle');
         const { code, message: messageText, data, pageSize, current, total } = await http.post(queryArticle, params);
         if (code === 200) {
             const pagination = {
