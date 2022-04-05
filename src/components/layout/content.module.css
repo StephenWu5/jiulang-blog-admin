@@ -1,9 +1,12 @@
 .contentWrapper {
-    padding: 20px;
-    box-sizing: border-box;
+  margin-bottom: 20px; 
+  height: calc(100%);
+  box-sizing: border-box;
+  /* background-color: black; */
+  /* color: red; */
+  overflow: hidden;
 }
 
-.breadCrumbWrapper {
-    padding-bottom: 10px!important;
-    color: rgb(31, 29, 29)!important;
+.BreadcrumbWrapper{
+  margin-bottom: 10px;
 }
