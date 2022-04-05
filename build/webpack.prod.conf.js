@@ -1,7 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const DIST_PATH = path.resolve(__dirname, '../dist');
-const DIST_PATH2 = path.resolve(__dirname, '../../my-blog-node/build');
+// 注意这里的路径
+const DIST_PATH2 = path.resolve(__dirname, '../../jiulang-blog-node/build');
 const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 //打包之前清除文件

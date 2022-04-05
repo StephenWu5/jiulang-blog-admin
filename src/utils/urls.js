@@ -1,16 +1,20 @@
-// let serverName = 'dev'; // 本地环境
-let serverName = 'testing'; // 测试环境
-//let serverName  = 'prod'; // 开发环境
+let serverName = 'dev'; // 本地环境
+//let serverName = 'testing'; // 测试环境
+//let serverName  = 'prod'; // 生产环境
 
 // 动态改变URL前边部分
 export function getUrlPrev(serverName) {
     if (serverName === 'dev') {
         return '/mock';
     } if (serverName === 'prod') {
-        // return '';
-        return 'http://127.0.0.1:5000/mock';
-    } else {
+        // 生产环境
+        return '';
+        // return 'http://127.0.0.1:8081/';
+        // return 'http://127.0.0.1:5000/mock';
+    } else if (serverName === 'testing') {
         // 测试环境
+        return '';
+    } else {
         return '';
     }
 }

@@ -10,6 +10,7 @@ const derServerPort = 8080;
 //开发环境的端口号。
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 //识别某些类别的webpack错误，并清理，聚合和优先级，以提供更好的开发人员体验。(友好的提示插件)。
+const path = require('path');
 module.exports = merge(baseWebpackConfig, {
     mode: 'development', // 指定开发环境
     //开发环境,会将 process.env.NODE_ENV 的值设为 development。启用 NamedChunksPlugin 和 NamedModulesPlugin
@@ -21,9 +22,28 @@ module.exports = merge(baseWebpackConfig, {
                 test: /\.css$/,
                 use: [
                     { loader: 'style-loader' },
-                    { loader: 'css-loader' },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            localIdentName: '[name]-[local]-[hash:base64:3]',
+                            modules: true
+                        }
+                    },
                     { loader: 'postcss-loader' }
-                ]
+                ],
+                exclude: /node_modules/,
+                include: /\.module\./
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    { loader: 'style-loader' },
+                    {
+                        loader: 'css-loader'
+                    },
+                    { loader: 'postcss-loader' }
+                ],
+                exclude: /\.module\./
             },
             {
                 test: /\.(sc|sa)ss$/,

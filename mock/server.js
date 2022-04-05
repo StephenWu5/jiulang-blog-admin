@@ -5,6 +5,12 @@ var path = require('path'); //系统路径模块
 var fs = require('fs'); //文件模块
 
 app.all('*', function (req, res) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('X-Powered-By', ' 3.2.1');
+    res.header('Content-Type', 'application/json;charset=utf-8');
+
     let { url } = req;
     if (url.startsWith('/mock')) {
         //前面参数使用正则，后面使用字符串
