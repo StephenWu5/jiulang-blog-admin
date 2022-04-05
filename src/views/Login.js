@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon, message, Card } from 'antd';
+import Cookies from 'js-cookie';
 
 import GroupForm from '../components/GroupForm';
 import { login, register } from '../utils/urls';
@@ -52,8 +53,10 @@ class Login extends React.PureComponent {
     }
     login = async (values) => {
         const res = await http.post(login, values);
-        const { code, message: messageText } = res;
+        const { code, message: messageText, data } = res;
         if (code === 200) {
+            // 前端设置cookie
+            Cookies.set('resc', data);
             message.success(messageText);
             this.props.history.push({ pathname: '/index/Dispatch' });
         } else if (code === 400) {

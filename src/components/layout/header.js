@@ -12,8 +12,8 @@ class Header extends React.PureComponent {
      * 个人信息初始化
      */
     personInfoInit() {
-        if (Cookies.getJSON('resc')) {
-            let resc = Cookies.getJSON('resc').slice(2);
+        if (Cookies.get('resc')) {
+            let resc = Cookies.get('resc');
             resc = JSON.parse(resc);
             this.setState({
                 // 增加条件ismount为true时
