@@ -5,7 +5,7 @@ const { Header, Footer, Sider, Content } = Layout;
 
 import SelfHeader from '../components/layout/header.js';
 import SelfContent from '../components/layout/content.js';
-import Slider from '../components/layout/Slider.js';
+import Left from '../components/layout/Left.js';
 import SelfFooter from '../components/layout/footer.js';
 import './Index.css';
 
@@ -75,7 +75,7 @@ class Index extends React.Component {
                     collapsed={collapsed}
                     onCollapse={this.onCollapse}
                 >
-                    <Slider></Slider>
+                    <Left></Left>
                 </Sider>
                 <Layout style={{ color: 'white' }}>
                     <Header>
