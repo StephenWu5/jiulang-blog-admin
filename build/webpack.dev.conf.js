@@ -118,7 +118,7 @@ module.exports = merge(baseWebpackConfig, {
                 html5: true,
                 collapseWhitespace: true //把生成的 index.html 文件的内容的没用空格去掉，减少空间
             },
-            title: '旧浪博客',
+            title: '博客服务平台',
             hash: true,
             showErrors: true
         }),

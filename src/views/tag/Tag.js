@@ -86,8 +86,8 @@ class TagPage extends React.PureComponent {
     /**
      * 获取表格数据
      */
-    async fetchData() {
-        const { code, data, message: messageText, pageSize, current, total} = await http.post(queryTags);
+    fetchData = async (params) => {
+        const { code, data, message: messageText, pageSize, current, total} = await http.post(queryTags, params);
         if (code === 200) {
             const pagination = {
                 // 分页信息

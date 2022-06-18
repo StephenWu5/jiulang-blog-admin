@@ -23,7 +23,7 @@ class Index extends React.Component {
     // 定义liangliangnihonihoa niahonihao nhoa
     state = {
         collapsed: false,
-        menuItem: '0' // 初始化menuItem高亮
+        menuItem: localStorage.getItem('menuItem') || '0' // 初始化menuItem高亮
     };
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -84,9 +84,9 @@ class Index extends React.Component {
                     <Content>
                         <SelfContent {...this.props}></SelfContent>
                     </Content>
-                    {/* <Footer style={{ textAlign: 'center', padding: '0px 50px' }}>
+                    <Footer style={{ textAlign: 'center', padding: '0px 50px'}}>
                         <SelfFooter></SelfFooter>
-                    </Footer> */}
+                    </Footer>
                 </Layout>
             </Layout>
         );

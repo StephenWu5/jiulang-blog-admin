@@ -22,6 +22,7 @@ class BasicTable extends React.PureComponent {
         return null;
     }
     changePage(current) {
+        console.log(current, 'current');
         const { query } = this.props;
         const { pageSize } = this.props.pagination;
         const pagination = {

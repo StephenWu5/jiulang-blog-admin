@@ -56,7 +56,7 @@ class Login extends React.PureComponent {
         const { code, message: messageText, data } = res;
         if (code === 200) {
             // 前端设置cookie
-            Cookies.set('resc', data);
+            //Cookies.set('resc', data);
             message.success(messageText);
             this.props.history.push({ pathname: '/index/Dispatch' });
         } else if (code === 400) {
@@ -86,12 +86,19 @@ class Login extends React.PureComponent {
             this.register(values);
         }
     }
+    /**
+     * 渲染头部标题
+     * @returns
+     */
+    renderTitle() {
+        return (<div style={{ textAlign: 'center', fontWeight: 'bold', opacity: 0.85, fontSize: '22px' }}>博客服务平台</div>);
+    }
 
     render() {
         return (
             <div className="login-wrapper">
                 <div className="login-form">
-                    <Card>
+                    <Card title={this.renderTitle()}>
                         <GroupForm
                             fields={this.getFields()}
                             handleSubmit={(action, values) => this.handleSubmit(action, values)}

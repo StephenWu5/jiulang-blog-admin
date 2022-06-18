@@ -178,7 +178,7 @@ module.exports = merge(baseWebpackConfig, {
         new HtmlWebpackPlugin({
             //将目录下的index.html引进生成的dist中的index.html
             template: 'public/index.html',
-            title: '旧浪博客',
+            title: '博客服务平台',
             minify: {
                 // 删除一些注释空行
                 removeComments: true,

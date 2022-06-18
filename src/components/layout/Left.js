@@ -12,6 +12,8 @@ class Left extends React.PureComponent {
     };
     handleClick = ({ item, key, keyPath, domEvent }) => {
         this.context.callback(key);
+        // 往localStorage里面存储menuItem
+        localStorage.setItem('menuItem', key);
         // react 更新的 精华或者使用 antd的 setItem , 严禁使用 updateForce。
         this.setState({
             freshFlag: new Date().getTime()

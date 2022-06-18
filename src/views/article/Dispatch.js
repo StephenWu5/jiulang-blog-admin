@@ -1,18 +1,22 @@
 import React from 'react';
 import { Form, message, Card } from 'antd';
-import { get } from 'lodash';
+import { get, debounce } from 'lodash';
+
 
 import { dispatchArticle, updateArticle, queryTags } from '../../utils/urls';
 import http from '../../utils/http';
 import GroupForm from '../../components/GroupForm';
 import { getFields } from './config.js';
-
+import './Dispatch.module.css';
 // 发布文章
 class Dispatch extends React.PureComponent {
     state = {
         tagsEnums: [], // 标签下拉值,
-        formData: {} //表单详情值,
+        formData: {}, //表单详情值,
+        height: 0
+
     };
+    divCon = React.createRef();
     componentDidMount() {
         const mode = get(this.props.location.query, 'mode', undefined);
         this.mode = mode === undefined ? 'Add' : mode;
@@ -28,6 +32,8 @@ class Dispatch extends React.PureComponent {
                 }
             });
         }
+        this.calcRect();
+        window.addEventListener('resize', this.calcRectDebounce, false);
     }
     // 默认新增编辑模式
     mode = 'Add';
@@ -101,13 +107,30 @@ class Dispatch extends React.PureComponent {
             message.info(messageText);
         }
     }
+    // table高度自适配的开始
+    calcRect = (myHeight) => {
+        const current = this.divCon.current;
+        if (current) {
+            const rects = current.getBoundingClientRect();
+            this.setState({
+                height: myHeight || (window.innerHeight - 44 - rects.top)
+            });
+        }
+    }
+    calcRectDebounce = debounce(this.calcRect, 300);
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.calcRectDebounce);
+    }
+    componentDidUpdate() {
+        this.calcRect();
+    }
     /**
      * 渲染函数
      */
     render() {
-        const { formData } = this.state;
+        const { formData, height } = this.state;
         return (
-            <div className="dispatch-wrapper">
+            <div className="dispatch-wrapper" style={{ height: height, overflowY: 'scroll' }} ref={this.divCon}>
                 <Card>
                     <GroupForm
                         fields={getFields(this.otherConfig)}
