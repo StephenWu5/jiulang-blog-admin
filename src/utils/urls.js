@@ -1,5 +1,5 @@
-//let serverName = 'dev'; // 本地环境
-let serverName  = 'prod'; // 生产环境
+let serverName = 'dev'; // 本地环境
+// let serverName  = 'prod'; // 生产环境
 
 // 生产服务器： http://127.0.0.1:8081/
 // 本地数据服务器：http://127.0.0.1:5000/mock

@@ -25,13 +25,14 @@ app.all('*', function (req, res) {
                     message: `查找【${jsonDataName}】出错...`
                 });
             } else {
-                // if (url === '/mock/api/login') {
-                //     // 登录需要设置cookie
-                //     const { data: innerData } = JSON.parse(data);
-                //     res.cookie('resc', innerData, {
-                //         expires: new Date(Date.now() + 900000000)
-                //     });
-                // }
+                if (url === '/mock/api/login') {
+                    // 登录需要设置cookie
+                    const { data: innerData } = JSON.parse(data);
+                    // 设置cookie，内容要字符串化
+                    res.cookie('resc', JSON.stringify(innerData), {
+                        expires: new Date(Date.now() + 900000000)
+                    });
+                }
                 res.send(data);
             }
         });
