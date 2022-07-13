@@ -3,11 +3,11 @@ import { Redirect, Route } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import asyncComponent from './asyncComponent';
 
+// 4.12 代码分割以按需加载，需要写全部组件才有按需加载
 const Dispatch = asyncComponent(() => import(/* webpackChunkName: 'article-Dispatch121' */ '../views/article/Dispatch.js'));
-import Index from '../views/Index';
-import Article from '../views/article/Article.js';
-import(/* webpackChunkName: 'article-Dispatch121' */ '../views/article/Dispatch.js');
-import Tag from '../views/tag/Tag.js';
+const Index = asyncComponent(() => import(/* webpackChunkName: 'article-Dispatch1212' */ '../views/Index'));
+const Article = asyncComponent(() => import(/* webpackChunkName: 'article-Dispatch1213' */ '../views/article/Article.js'));
+const Tag = asyncComponent(() => import(/* webpackChunkName: 'article-Dispatch-tag' */ '../views/tag/Tag.js'));
 
 /**
  * 异步加载组件
