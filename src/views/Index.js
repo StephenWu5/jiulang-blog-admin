@@ -84,9 +84,9 @@ class Index extends React.Component {
                     <Content>
                         <SelfContent {...this.props}></SelfContent>
                     </Content>
-                    <Footer style={{ textAlign: 'center', padding: '0px 50px'}}>
+                    {/* <Footer style={{ textAlign: 'center', padding: '0px 50px'}}>
                         <SelfFooter></SelfFooter>
-                    </Footer>
+                    </Footer> */}
                 </Layout>
             </Layout>
         );

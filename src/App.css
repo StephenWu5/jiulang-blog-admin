@@ -1,2 +1,7 @@
 @import '~antd/dist/antd.css';
 @import './styles/reset.css';
+
+/* 解决登陆页面下方有一块的问题 */
+#root, .App {
+    height: 100%;
+}
